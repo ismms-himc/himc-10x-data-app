@@ -15,7 +15,7 @@ const SampleFilter = (props) => (
 );
 
 export const SampleList = (props) => (
-    <List {...props}>
+    <List {...props} filters={<SampleFilter />}>
         <Datagrid>
             <TextField source="sample_id" />
         </Datagrid>
