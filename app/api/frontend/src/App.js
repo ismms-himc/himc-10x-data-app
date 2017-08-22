@@ -1,21 +1,20 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { Admin, Resource } from 'admin-on-rest';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
-  }
-}
+import { SampleList } from './samples';
+
+// TODO: get a real restClient!!!
+// restClient is a function capable of translating REST commands into HTTP
+// requests. Since REST isn't a standard, will have to provide custom client
+// to connect to own APIs
+
+// TODO: consider adding "sample icon"
+// closest material-ui icon option can be found here: https://www.materialui.co/icon/opacity
+
+const App = () => (
+    <Admin restClient={jsonServerRestClient('http://jsonplaceholder.typicode.com')}>
+        <Resource name="samples" list={SampleList} />
+    </Admin>
+);
 
 export default App;
