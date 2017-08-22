@@ -1,6 +1,6 @@
-Notes for own educational purposes only.
+Notes for own educational purposes only. May be useful for creating apps using same stack in the future :)
 
-When setting up:
+Steps taken:
 1.) Integrate with admin-on-rest:
 cd app/api
 sudo npm install -g create-react-app
@@ -15,4 +15,25 @@ Note to self: pack.json name: frontend. May need to change later on
 
 3.) In App.js, integrate admin on rest and jsonServerRestClient hack
 
-4.) 
+4.) Begin filling out application.py based on himc-db and flask-jwt-auth
+
+5.) Create and active a virtualenv and install the dependencies as per jwt-auth tutorial:
+$ python3.6 -m venv env
+$ source env/bin/activate
+$ cd app
+$ pip install -r requirements.txt
+
+6.) Set up Postgres
+sudo -u postgres -i
+psql
+# create database himc_10x_data_app;
+CREATE DATABASE
+# create database himc_10x_data_app_test;
+CREATE DATABASE
+# \q
+
+7.) Fill out app/config.py based off jwt_auth project/server/config.py and set environment variables in terminal:
+
+export APP_SETTINGS="app.config.DevelopmentConfig"
+
+8.) Add tests for development and testing configs in tests/ instead of project/tests like jwt-auth
