@@ -13,4 +13,6 @@ Note to self: pack.json name: frontend. May need to change later on
 
 2.) Begin filling out SampleFilter and SampleList constants. 
 
-3.) In App.js, integrate admin on rest
+3.) In App.js, integrate admin on rest and jsonServerRestClient hack
+
+4.) 
