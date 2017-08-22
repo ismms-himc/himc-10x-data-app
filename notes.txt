@@ -1,0 +1,32 @@
+Notes for own educational purposes only.
+
+When setting up:
+1.) Integrate with admin-on-rest:
+cd app/api
+sudo npm install -g create-react-app
+create-react-app frontend
+cd frontend
+yarn add admin-on-rest
+yarn start
+Note to self: pack.json name: frontend. May need to change later on
+
+Error:
+Starting the development server...
+
+events.js:182
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: watch /home/himc/himc/himc-10x-data-app/app/api/frontend/public ENOSPC
+    at exports._errnoException (util.js:1022:11)
+    at FSWatcher.start (fs.js:1384:19)
+    at Object.fs.watch (fs.js:1410:11)
+    at createFsWatchInstance (/home/himc/himc/himc-10x-data-app/app/api/frontend/node_modules/chokidar/lib/nodefs-handler.js:37:15)
+    at setFsWatchListener (/home/himc/himc/himc-10x-data-app/app/api/frontend/node_modules/chokidar/lib/nodefs-handler.js:80:15)
+    at FSWatcher.NodeFsHandler._watchWithNodeFs (/home/himc/himc/himc-10x-data-app/app/api/frontend/node_modules/chokidar/lib/nodefs-handler.js:228:14)
+    at FSWatcher.NodeFsHandler._handleDir (/home/himc/himc/himc-10x-data-app/app/api/frontend/node_modules/chokidar/lib/nodefs-handler.js:407:19)
+    at FSWatcher.<anonymous> (/home/himc/himc/himc-10x-data-app/app/api/frontend/node_modules/chokidar/lib/nodefs-handler.js:455:19)
+    at FSWatcher.<anonymous> (/home/himc/himc/himc-10x-data-app/app/api/frontend/node_modules/chokidar/lib/nodefs-handler.js:460:16)
+    at FSReqWrap.oncomplete (fs.js:153:5)
+error Command failed with exit code 1.
+(env) 
