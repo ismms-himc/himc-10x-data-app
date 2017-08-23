@@ -53,3 +53,5 @@ python3 manage.py db migrate
 13.) generate random secret key
 
 14.) add user model test
+
+15.) Add decode auth function and test
