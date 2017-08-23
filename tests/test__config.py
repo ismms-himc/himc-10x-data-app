@@ -1,6 +1,13 @@
+import unittest
+
+from flask import current_app
+from flask_testing import TestCase
+
+from app.api import app
+
 class TestDevelopmentConfig(TestCase):
     def create_app(self):
-        app.config.from_object('project.server.config.DevelopmentConfig')
+        app.config.from_object('app.config.DevelopmentConfig')
         return app
 
     def test_app_is_development(self):
@@ -13,7 +20,7 @@ class TestDevelopmentConfig(TestCase):
 
 class TestTestingConfig(TestCase):
     def create_app(self):
-        app.config.from_object('project.server.config.TestingConfig')
+        app.config.from_object('app.config.TestingConfig')
         return app
 
     def test_app_is_testing(self):
@@ -21,3 +28,17 @@ class TestTestingConfig(TestCase):
         self.assertTrue(
             app.config['SQLALCHEMY_DATABASE_URI'] == 'postgresql://postgres:@localhost/himc_10x_data_app_test'
         )
+
+
+class TestProductionConfig(TestCase):
+    def create_app(self):
+        app.config.from_object('app.config.ProductionConfig')
+        return app
+
+    def test_app_is_production(self):
+        self.assertTrue(app.config['DEBUG'] is False)
+
+# TODO: what does below do? tests run/pass without it:
+# https://docs.python.org/2/library/unittest.html#unittest.main
+if __name__ == '__main__':
+    unittest.main()

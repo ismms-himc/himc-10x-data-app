@@ -13,15 +13,18 @@ COV = coverage.coverage(
     include='himc-10x-data-app/*',
     omit=[
         'himc-10x-data-app/tests/*',
-        'himc-10x-data-app/app/config.py'
-        # TODO: below needed? no equivalent to the jwt-auth line below
-        # 'project/server/*/__init__.py'
+        'himc-10x-data-app/app/config.py',
+        # TODO: below needed? no equivalent to the jwt-auth line below-- now there is
+        'himc-10x-data-app/app/api/__init__.py'
     ]
 )
 COV.start()
 
 # TODO: does below work or will there be an issue because application.py is not __init__.py
 # also not sure if models will work
+# 8/22 update: change application.py to __init__.py
+# TODO: check if we need to import specific model files
+# (ex: from app.api.models import sample, user)
 from app.api import app, db, models
 # from project.server import app, db, models
 
@@ -35,7 +38,7 @@ manager.add_command('db', MigrateCommand)
 @manager.command
 def test():
     """Runs the unit tests without test coverage."""
-    tests = unittest.TestLoader().discover('himc-10x-data-app/tests/', pattern='test*.py')
+    tests = unittest.TestLoader().discover('tests/', pattern='test*.py')
     result = unittest.TextTestRunner(verbosity=2).run(tests)
     if result.wasSuccessful():
         return 0
@@ -45,7 +48,7 @@ def test():
 @manager.command
 def cov():
     """Runs the unit tests with coverage."""
-    tests = unittest.TestLoader().discover('himc-10x-data-app/tests/')
+    tests = unittest.TestLoader().discover('tests/')
     result = unittest.TextTestRunner(verbosity=2).run(tests)
     if result.wasSuccessful():
         COV.stop()

@@ -1,15 +1,19 @@
 # main entry point of application
 
 import os
-import sys
-import json
+# import sys
+# import json
 
-import flask
-from flask import request, Response
+# import flask
+# from flask import request, Response
 
 from flask import Flask
 from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
+
+# TODO: add this like here?: https://github.com/realpython/flask-jwt-auth/blob/master/project/server/__init__.py
+# from flask_cors import CORS
+# CORS(app)
 
 # TODO: below needed??
 # from flask.ext.cors import cross_origin
@@ -24,14 +28,7 @@ app = Flask(__name__)
 
 app_settings = os.getenv(
     'APP_SETTINGS',
-    'project.server.config.DevelopmentConfig'
-)
-
-app.config.from_object(app_settings)
-
-app_settings = os.getenv(
-    'APP_SETTINGS',
-    'project.server.config.DevelopmentConfig'
+    'app.config.DevelopmentConfig'
 )
 
 # TODO: this is different than himc db. ok?
