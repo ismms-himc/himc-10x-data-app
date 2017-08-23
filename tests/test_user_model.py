@@ -1,0 +1,24 @@
+import unittest
+
+from app.api import db
+from app.api.models.user import User
+# TODO: below ok?
+from tests.base import BaseTestCase
+
+
+class TestUserModel(BaseTestCase):
+
+    def test_encode_auth_token(self):
+        user = User(
+            first_name='First Name',
+            last_name = 'Last Name',
+            email='test@test.com',
+            password='test'
+        )
+        db.session.add(user)
+        db.session.commit()
+        auth_token = user.encode_auth_token(user.id)
+        self.assertTrue(isinstance(auth_token, bytes))
+
+if __name__ == '__main__':
+    unittest.main()

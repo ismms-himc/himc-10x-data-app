@@ -12,6 +12,8 @@ database_name = 'himc_10x_data_app'
 class BaseConfig:
     """Base configuration."""
     # TODO: change key below??
+    # Returns the value of the environment variable if it exists. Otherwise,
+    # returns the second argument.
     SECRET_KEY = os.getenv('SECRET_KEY', 'my_precious')
     DEBUG = False
     BCRYPT_LOG_ROUNDS = 13

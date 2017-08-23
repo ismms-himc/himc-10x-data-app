@@ -47,3 +47,9 @@ python3 manage.py test
 python3 manage.py create_db
 python3 manage.py db init
 python3 manage.py db migrate
+
+12.) add encode_auth_token function to User model
+
+13.) generate random secret key
+
+14.) add user model test
