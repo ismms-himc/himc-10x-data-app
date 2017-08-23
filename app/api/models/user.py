@@ -1,4 +1,5 @@
 import datetime
+import jwt
 
 from app.api import app, db, bcrypt
 
@@ -23,3 +24,30 @@ class User(db.Model):
         ).decode()
         self.registered_on = datetime.datetime.now()
         self.himc_staff = himc_staff
+
+    def encode_auth_token(self, user_id):
+        """
+        Generates the Auth Token
+        :return: string
+        """
+        try:
+            payload = {
+            # TODO: 
+            # 1) check if expired token results in user being booted from app 
+            # immediately or only after closing/logging out from app?
+            # 2) does logging out automatically make the token expired?
+            # 3) change expiration date to more than 5 seconds. 
+                # expiration date of the token
+                'exp': datetime.datetime.utcnow() + datetime.timedelta(days=0, seconds=5),
+                # iat is the time the token is generated
+                'iat': datetime.datetime.utcnow(),
+                # sub is the subject of the token (the user whom it identifies)
+                'sub': user_id
+            }
+            return jwt.encode(
+                payload,
+                app.config.get('SECRET_KEY'),
+                algorithm='HS256'
+            )
+        except Exception as e:
+            return e
