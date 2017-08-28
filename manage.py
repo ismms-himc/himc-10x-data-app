@@ -25,7 +25,7 @@ COV.start()
 # 8/22 update: change application.py to __init__.py
 # TODO: check if we need to import specific model files
 # (ex: from app.api.models import sample, user)
-from app.api import app, db
+from app import app, db
 from app.api.models import user
 # from project.server import app, db, models
 

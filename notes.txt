@@ -62,7 +62,10 @@ python3 manage.py db migrate
 		python3 __init__.py
 
 		Attempts:
-		export FLASK_APP=__init__.py
+		1) export FLASK_APP=__init__.py
+		2) create setup.py file, move __init__.py from app/api to app/, export FLASK_APP=himc-10x-data-app, pip install -e ., flask run
+			** this made it work, but not via flask run; running python3 __init__.py no longer results in an error
+
 
 
 

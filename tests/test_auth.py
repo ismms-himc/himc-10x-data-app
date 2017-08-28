@@ -3,7 +3,7 @@
 # import unittest
 import json
 # import time
-from app.api import db
+from app import db
 from app.api.models.user import User
 from tests.base import BaseTestCase
 
