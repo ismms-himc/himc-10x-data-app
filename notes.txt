@@ -55,3 +55,19 @@ python3 manage.py db migrate
 14.) add user model test
 
 15.) Add decode auth function and test
+
+
+16.) Get the following working: 
+		cd app/api
+		python3 __init__.py
+
+		Attempts:
+		export FLASK_APP=__init__.py
+
+
+
+17.) Add auth route and test
+
+
+
+START WITH ROUTE SET UP!!!!
