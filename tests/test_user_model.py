@@ -2,7 +2,6 @@ import unittest
 
 from app.api import db
 from app.api.models.user import User
-# TODO: below ok?
 from tests.base import BaseTestCase
 
 
@@ -32,6 +31,7 @@ class TestUserModel(BaseTestCase):
         auth_token = user.encode_auth_token(user.id)
         self.assertTrue(isinstance(auth_token, bytes))
         self.assertTrue(User.decode_auth_token(auth_token) == 1)
+
 
 
 if __name__ == '__main__':
