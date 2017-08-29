@@ -1,0 +1,23 @@
+1.) cd app/api/frontend
+sudo npm install
+sudo yarn start OR sudo npm start
+
+2.) cd ../../..
+$ python3.6 -m venv env
+$ source env/bin/activate
+$ cd app
+$ pip3 install -r requirements.txt
+
+3.) cd ..
+export APP_SETTINGS="app.config.DevelopmentConfig"
+
+4.) 
+(env)$ python3
+>>> import os
+>>> os.urandom(24)
+b"\xf9'\xe4p(\xa9\x12\x1a!\x94\x8d\x1c\x99l\xc7\xb7e\xc7c\x86\x02MJ\xa0"
+>>>
+
+export SECRET_KEY="\xf9'\xe4p(\xa9\x12\x1a!\x94\x8d\x1c\x99l\xc7\xb7e\xc7c\x86\x02MJ\xa0"
+
+5.) python3 manage.py test

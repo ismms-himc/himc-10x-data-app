@@ -66,11 +66,10 @@ python3 manage.py db migrate
 		2) create setup.py file, move __init__.py from app/api to app/, export FLASK_APP=himc-10x-data-app, pip install -e ., flask run
 			** this made it work, but not via flask run; running python3 __init__.py no longer results in an error
 
+17.) Add auth test
+
+18.) Add auth route
 
 
 
-17.) Add auth route and test
-
-
-
-START WITH ROUTE SET UP!!!!
+IN-PROGRESS: debug tests for user registration

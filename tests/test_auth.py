@@ -18,7 +18,7 @@ def register_user(self, email, password):
         '/auth/register',
         data=json.dumps(dict(
             first_name='First Name',
-            last_name = 'Last Name',
+            last_name ='Last Name',
             email=email,
             password=password
         )),
@@ -29,16 +29,7 @@ class TestAuthBlueprint(BaseTestCase):
     def test_registration(self):
 	    """ Test for user registration """
 	    with self.client:
-	        # response = register_user(self, 'joe@example.com', '123456')
-	                [response = self.client.post(
-            '/auth/register',
-            data=json.dumps(dict(
-                email='joe@gmail.com',
-                password='123456'
-            )),
-            content_type='application/json'
-        )
-
+	        response = register_user(self, 'joe@example.com', '123456')
 	        data = json.loads(response.data.decode())
 	        self.assertTrue(data['status'] == 'success')
 	        self.assertTrue(data['message'] == 'Successfully registered.')
