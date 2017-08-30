@@ -8,7 +8,6 @@ from app.api.models.user import User
 from tests.base import BaseTestCase
 # from app.api.routes.auth import views --> didn't fix JSONDecodeError
 
-
 def register_user(self, first_name, last_name, email, password):
 
     return self.client.post(

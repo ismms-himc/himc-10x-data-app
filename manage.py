@@ -26,7 +26,7 @@ COV.start()
 # TODO: check if we need to import specific model files
 # (ex: from app.api.models import sample, user)
 from app import app, db
-from app.api.models import user
+from app.api.models import user, sample
 # from project.server import app, db, models
 
 migrate = Migrate(app, db)
