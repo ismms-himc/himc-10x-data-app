@@ -29,7 +29,6 @@ app = Flask(__name__)
 # We enable CSRF protection globally as per http://flask-wtf.readthedocs.io/en/stable/csrf.html
 csrf = CSRFProtect(app)
 
-
 app_settings = os.getenv(
     'APP_SETTINGS',
     'app.config.DevelopmentConfig'
@@ -38,9 +37,31 @@ app_settings = os.getenv(
 # TODO: this is different than himc db. ok?
 app.config.from_object(app_settings)
 
+
+#####################################################3
+# FROM HIMC DB:
+
+# # Default config vals
+# THEME = 'default' if os.environ.get('THEME') is None else os.environ.get('THEME')
+# FLASK_DEBUG = 'false' if os.environ.get('FLASK_DEBUG') is None else os.environ.get('FLASK_DEBUG')
+
+# # Load config values specified above
+# app.config.from_object(__name__)
+
+# # Load configuration vals from a file
+# app.config.from_envvar('APP_CONFIG', silent=True)
+
+#########################################33
+
 bcrypt = Bcrypt(app)
 db = SQLAlchemy(app)
 
-# TODO: implement this
 from app.api.routes.auth.views import auth_blueprint
 app.register_blueprint(auth_blueprint)
+
+if __name__ == '__main__':
+    # # no debug
+    # application.run(host='0.0.0.0')
+
+    # running in debug mode
+    app.run(host='0.0.0.0', debug=True)
