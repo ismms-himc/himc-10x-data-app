@@ -1,15 +1,12 @@
-from flask import Blueprint, request, make_response, jsonify
-from flask.views import MethodView
+import flask
+from flask import Blueprint
 
-from app import app, bcrypt, db
-from app.api.models.user import User
+home_page_blueprint = Blueprint('home_page', __name__)
 
-
-from flask_cors import cross_origin
-
-
-@app.route('/')
+@home_page_blueprint.route('/', methods=['GET'])
 # @cross_origin() # in Nick's hack; TODO: confirm CSRF protection works
-@cross_origin()
-def react_page():
-    return flask.render_template('react-page.html')
+def root_page():
+    # TODO: render a login/signup page if user not logged in; otherwise, render
+    # the Samples Dashboard
+    print("IN ROOT_PAGE FUNCTION")
+    return "<h1>HELLO WORLD <h1>"
