@@ -56,12 +56,9 @@ app.config.from_object(app_settings)
 bcrypt = Bcrypt(app)
 db = SQLAlchemy(app)
 
+# TODO: make this work; look at home_page_bluprint in root/views for reference
 from app.api.routes.auth.views import auth_blueprint
 app.register_blueprint(auth_blueprint)
-
-if __name__ == '__main__':
-    # # no debug
-    # application.run(host='0.0.0.0')
-
-    # running in debug mode
-    app.run(host='0.0.0.0', debug=True)
+# site.routes.mod
+from app.api.routes.root.views import home_page_blueprint
+app.register_blueprint(home_page_blueprint)
