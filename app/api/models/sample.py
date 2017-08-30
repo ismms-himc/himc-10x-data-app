@@ -3,8 +3,8 @@ import jwt
 
 from app import app, db, bcrypt
 
-class User(db.Model):
-    """ User Model for storing user related details """
+class Sample(db.Model):
+    """ Sample Model for storing sample related details """
     __tablename__ = "samples"
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
