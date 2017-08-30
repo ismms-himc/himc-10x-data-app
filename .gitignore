@@ -19,3 +19,6 @@ app/api/frontend/.env.production.local
 app/api/frontend/npm-debug.log*
 app/api/frontend/yarn-debug.log*
 app/api/frontend/yarn-error.log*
+
+*.pyc
+*egg-info
