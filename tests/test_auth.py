@@ -1,24 +1,21 @@
 # project/tests/test_auth.py
 
-# import unittest
+import unittest # remove this comment once confirmed if/when import needed
 import json
-# import time
+import time # remove this comment once confirmed if/when import needed
 from app import db
 from app.api.models.user import User
 from tests.base import BaseTestCase
+# from app.api.routes.auth import views --> didn't fix JSONDecodeError
 
 
+def register_user(self, first_name, last_name, email, password):
 
-# from project.server import db
-# from project.server.models import User, BlacklistToken
-# from project.tests.base import BaseTestCase
-
-def register_user(self, email, password):
     return self.client.post(
         '/auth/register',
         data=json.dumps(dict(
-            first_name='First Name',
-            last_name ='Last Name',
+        	first_name=first_name,
+        	last_name=last_name,
             email=email,
             password=password
         )),
@@ -29,7 +26,14 @@ class TestAuthBlueprint(BaseTestCase):
     def test_registration(self):
 	    """ Test for user registration """
 	    with self.client:
-	        response = register_user(self, 'joe@example.com', '123456')
+	        response = register_user(self, 
+	        						"Joe", 
+	        						"Example", 
+	        						"joe@gmail.com", 
+	        						"123456")
+
+	        print("RESPONSE:")
+	        print(response)
 	        data = json.loads(response.data.decode())
 	        self.assertTrue(data['status'] == 'success')
 	        self.assertTrue(data['message'] == 'Successfully registered.')
@@ -37,9 +41,33 @@ class TestAuthBlueprint(BaseTestCase):
 	        self.assertTrue(response.content_type == 'application/json')
 	        self.assertEqual(response.status_code, 201)
 
+
+
+# class TestAuthBlueprint(BaseTestCase):
+#     def test_registration(self):
+#         """ Test for user registration """
+#         with self.client:
+	        # response = register_user(self, 'Joe', 'Example', 'joe@example.com', '123456')
+            # response = self.client.post('/auth/register', data=json.dumps(dict(email='joe@gmail.com', password='123456')),content_type='application/json')
+
+
+
+	        # print("DEBUGGING INFO")
+	        # print(response)
+	        # print(json.loads(response))
+	       	# json.loads(response)
+	        # data = json.loads(response.data.decode())
+	        # self.assertTrue(data['status'] == 'success')
+	        # self.assertTrue(data['message'] == 'Successfully registered.')
+	        # self.assertTrue(data['auth_token'])
+	        # self.assertTrue(response.content_type == 'application/json')
+	        # self.assertEqual(response.status_code, 201)
+
     # def test_registered_with_already_registered_user(self):
 	   #  """ Test registration with already registered email"""
 	   #  user = User(
+	   #  	first_name='Joe',
+	   #  	last_name='Example',
 	   #      email='joe@gmail.com',
 	   #      password='test'
 	   #  )
