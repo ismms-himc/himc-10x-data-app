@@ -79,6 +79,12 @@ DETOUR:
 
 20.) Add CSRF Protection
 
+21.) Add homepage routes and blueprints
+
+
+NEXT:
+Add /samples route and connect to front end
+Figure out how to seed development DB with samples to test
 
 
 DEBUGGING TOOLS:
