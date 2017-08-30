@@ -1,3 +1,5 @@
+# TODO: is this file used?
+
 from setuptools import setup
 
 setup(
