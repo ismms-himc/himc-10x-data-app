@@ -41,4 +41,4 @@ class ProductionConfig(BaseConfig):
     # TODO: change key below??
     SECRET_KEY = 'my_precious'
     DEBUG = False
-SQLALCHEMY_DATABASE_URI = 'postgresql:///example'
+    SQLALCHEMY_DATABASE_URI = 'postgresql:///example'

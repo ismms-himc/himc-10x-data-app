@@ -10,6 +10,7 @@ auth_blueprint = Blueprint('auth', __name__)
 class RegisterAPI(MethodView):
 
     def post(self):
+        print("HEREEEEEEEEEEEEEEEEEEE") # DOESN'T PRINT. WHY?
         # get the post data
         post_data = request.get_json()
         # check if user already exists

@@ -70,7 +70,16 @@ python3 manage.py db migrate
 
 18.) Add auth route
 
-
-
 IN-PROGRESS: debug tests for user registration
 <TestResponse streamed [404 NOT FOUND]>
+
+DETOUR:
+
+19.)
+
+
+
+
+
+DEBUGGING TOOLS:
+import pdb; pdb.set_trace()
