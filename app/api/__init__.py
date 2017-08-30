@@ -11,6 +11,7 @@ from flask import Flask
 from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
 
+from flask_wtf.csrf import CSRFProtect
 # TODO: add this like here?: https://github.com/realpython/flask-jwt-auth/blob/master/project/server/__init__.py
 # from flask_cors import CORS
 # CORS(app)
@@ -25,6 +26,9 @@ from flask_sqlalchemy import SQLAlchemy
 
 # Create the Flask app
 app = Flask(__name__)
+# We enable CSRF protection globally as per http://flask-wtf.readthedocs.io/en/stable/csrf.html
+csrf = CSRFProtect(app)
+
 
 app_settings = os.getenv(
     'APP_SETTINGS',

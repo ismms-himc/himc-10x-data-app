@@ -75,9 +75,9 @@ IN-PROGRESS: debug tests for user registration
 
 DETOUR:
 
-19.)
+19.) Create Sample model and run migrations
 
-
+20.) Add CSRF Protection
 
 
 
