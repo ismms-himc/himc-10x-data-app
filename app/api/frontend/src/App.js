@@ -2,6 +2,7 @@ import React from 'react';
 import { jsonServerRestClient, Admin, Resource } from 'admin-on-rest';
 
 import { SampleList } from './samples';
+import SampleIcon from 'material-ui/svg-icons/image/colorize';
 
 // TODO: look for better restClient option to avoid excess data manipulation on
 // backend?
@@ -22,9 +23,10 @@ if (url.indexOf('3000') > -1){
   url = 'http://localhost:5000';
 }
 
+
 const App = () => (
-    <Admin restClient={jsonServerRestClient(url)}>
-        <Resource name="samples" list={SampleList} />
+    <Admin restClient={jsonServerRestClient(url)} title= "HIMC Single-Cell Sequencing">
+        <Resource name="samples" list={SampleList} icon={SampleIcon}/>
     </Admin>
 );
 

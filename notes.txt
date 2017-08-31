@@ -83,10 +83,33 @@ DETOUR:
 
 22.) Add sample routes and blueprints
 
+23.) Seed db with 3 toy samples via psql command line:
+INSERT INTO samples (sample_id) VALUES ('ABC');
+INSERT INTO samples (sample_id) VALUES ('DEF');
+INSERT INTO samples (sample_id) VALUES ('GHI');
+
+24.) Add response for /samples API endpoint
+
 NEXT:
 Add /samples route and connect to front end
-Figure out how to seed development DB with samples to test
+
+DEBUG:
+front-end renders duplicates of same sample ID on "My Samples" page.
+Notes:
+	-integrating posts as per admin on rest tutorial does not give same error
+	-search feature properly renders sample ID
+	-Warning: Each child in an array or iterator should have a unique "key" prop. Check the top-level render call using <TableBody>. See https://fb.me/react-warning-keys for more information.
+    in TableRow
+
+NEXT STEPS:
+- Use DataGrid code from here: https://github.com/marmelab/admin-on-rest/blob/ef3fafaa73427ea1e0a26d3f73a05f31cd7a0bcc/src/mui/list/Datagrid.js
+Console.log keys to check if they are unique. If not unique, try using sample.id
+as key. In this small, app using sample_id will also suffice
+
 
 
 DEBUGGING TOOLS:
 import pdb; pdb.set_trace()
+
+
+TODO: delete app/api/frontend/src.posts.js
