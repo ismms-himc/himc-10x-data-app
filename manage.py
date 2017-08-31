@@ -77,5 +77,11 @@ def drop_db():
     db.drop_all()
 
 
+# To seed database with toy sample data:
+# TODO: find out how to seed db via alembic
+# from alembic import op
+# def seed_sample_data():
+#     op.bulk_insert
+
 if __name__ == '__main__':
 	manager.run()
