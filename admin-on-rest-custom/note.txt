@@ -1,0 +1,5 @@
+This folder contains relevant code from the Admin on Rest library:
+https://github.com/marmelab/admin-on-rest
+
+Code was copied here for debugging/customization purposes. We also only copy the
+parts of the library that we utilize in order to keep a lean code base.
