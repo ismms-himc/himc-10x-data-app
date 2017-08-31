@@ -64,7 +64,6 @@ def cov():
         return 0
     return 1
 
-
 @manager.command
 def create_db():
     """Creates the db tables."""

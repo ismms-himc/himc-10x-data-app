@@ -3,7 +3,6 @@
 import os
 # import sys
 # import json
-
 # import flask
 # from flask import request, Response
 
@@ -12,7 +11,6 @@ from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
 
 from flask_wtf.csrf import CSRFProtect
-
 
 # TODO: below needed??
 # from flask.ext.cors import cross_origin
@@ -40,7 +38,6 @@ app_settings = os.getenv(
 
 # TODO: this is different than himc db. ok?
 app.config.from_object(app_settings)
-
 
 #####################################################3
 # FROM HIMC DB:

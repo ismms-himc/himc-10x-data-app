@@ -20,10 +20,14 @@ def get_samples():
     	# TODO: eventually modify this to send S3 info needed
     	sample_data.append({ "sample_id": sample.sample_id })
 
+    print("Sample Data:")
     print(sample_data)
+    print("\n")
     print("<h1> Samples Index </h1>")
     response = flask.Response(json.dumps(sample_data))
     response.headers.add('X-Total-Count', len(sample_data))
     response.headers.add('Access-Control-Expose-Headers', 'X-Total-Count')
-
+    print("RESPONSE:")
+    print(response)
+    # import pdb; pdb.set_trace()
     return(response)

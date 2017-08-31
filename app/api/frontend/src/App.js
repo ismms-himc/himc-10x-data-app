@@ -12,7 +12,6 @@ import { SampleList } from './samples';
 // TODO: consider adding "sample icon"
 // closest material-ui icon option can be found here: https://www.materialui.co/icon/opacity
 
-
 // URL for jsonServerRestClient
 ////////////////////////////////
 // TODO: determine if better alternative to this hack
