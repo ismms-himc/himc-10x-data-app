@@ -62,3 +62,6 @@ app.register_blueprint(auth_blueprint)
 # site.routes.mod
 from app.api.routes.root.views import home_page_blueprint
 app.register_blueprint(home_page_blueprint)
+
+from app.api.routes.sample.views import sample_blueprint
+app.register_blueprint(sample_blueprint)

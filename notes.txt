@@ -81,6 +81,7 @@ DETOUR:
 
 21.) Add homepage routes and blueprints
 
+22.) Add sample routes and blueprints
 
 NEXT:
 Add /samples route and connect to front end
