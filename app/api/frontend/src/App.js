@@ -3,7 +3,8 @@ import { jsonServerRestClient, Admin, Resource } from 'admin-on-rest';
 
 import { SampleList } from './samples';
 
-// TODO: get a real restClient!!!
+// TODO: look for better restClient option to avoid excess data manipulation on
+// backend?
 // restClient is a function capable of translating REST commands into HTTP
 // requests. Since REST isn't a standard, will have to provide custom client
 // to connect to own APIs

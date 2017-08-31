@@ -12,9 +12,7 @@ from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
 
 from flask_wtf.csrf import CSRFProtect
-# TODO: add this like here?: https://github.com/realpython/flask-jwt-auth/blob/master/project/server/__init__.py
-# from flask_cors import CORS
-# CORS(app)
+
 
 # TODO: below needed??
 # from flask.ext.cors import cross_origin
@@ -26,6 +24,12 @@ from flask_wtf.csrf import CSRFProtect
 
 # Create the Flask app
 app = Flask(__name__)
+
+# TODO: add this like here?: https://github.com/realpython/flask-jwt-auth/blob/master/project/server/__init__.py
+# Note: Adding the below helped overcome error: "No 'Access-Control-Allow-Origin' header is present on the requested resource."
+from flask_cors import CORS
+CORS(app)
+
 # We enable CSRF protection globally as per http://flask-wtf.readthedocs.io/en/stable/csrf.html
 csrf = CSRFProtect(app)
 
