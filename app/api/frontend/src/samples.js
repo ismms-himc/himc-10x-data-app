@@ -21,7 +21,7 @@ const SampleFilter = (props) => (
 export const SampleList = (props) => (
     <List {...props} filters={<SampleFilter />} title="Samples">
         <Datagrid>
-            <TextField source="sample_id" />
+            <TextField source="sample_id" label="Sample ID"/>
         </Datagrid>
     </List>
 );
