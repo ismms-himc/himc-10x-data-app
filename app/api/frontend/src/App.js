@@ -23,7 +23,6 @@ if (url.indexOf('3000') > -1){
   url = 'http://localhost:5000';
 }
 
-
 const App = () => (
     <Admin restClient={jsonServerRestClient(url)} title= "HIMC Single-Cell Sequencing">
         <Resource name="samples" list={SampleList} icon={SampleIcon}/>

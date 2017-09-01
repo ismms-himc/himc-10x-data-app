@@ -18,7 +18,8 @@ def get_samples():
     sample_data = []
     for sample in samples:
     	# TODO: eventually modify this to send S3 info needed
-    	sample_data.append({ "sample_id": sample.sample_id })
+    	sample_data.append({ "id": sample.id, 
+                            "sample_id": sample.sample_id })
 
     if 'q' in request.args:
     	# perform search using list comprehensions
