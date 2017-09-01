@@ -87,24 +87,31 @@ DETOUR:
 INSERT INTO samples (sample_id) VALUES ('ABC');
 INSERT INTO samples (sample_id) VALUES ('DEF');
 INSERT INTO samples (sample_id) VALUES ('GHI');
+INSERT INTO samples (sample_id) VALUES ('JKL');
+INSERT INTO samples (sample_id) VALUES ('AYZ');
 
 24.) Add response for /samples API endpoint
 
-NEXT:
-Add /samples route and connect to front end
+25.) set up S3 bucket & IAM as per https://www.youtube.com/watch?v=v33Kl-Kx30o
 
-DEBUG:
-front-end renders duplicates of same sample ID on "My Samples" page.
-Notes:
-	-integrating posts as per admin on rest tutorial does not give same error
-	-search feature properly renders sample ID
-	-Warning: Each child in an array or iterator should have a unique "key" prop. Check the top-level render call using <TableBody>. See https://fb.me/react-warning-keys for more information.
-    in TableRow
 
-NEXT STEPS:
-- Use DataGrid code from here: https://github.com/marmelab/admin-on-rest/blob/ef3fafaa73427ea1e0a26d3f73a05f31cd7a0bcc/src/mui/list/Datagrid.js
-Console.log keys to check if they are unique. If not unique, try using sample.id
-as key. In this small, app using sample_id will also suffice
+NEXT: Add the following columns to samples table:
+a.) reference_transcriptome
+b.) web_summary
+c.) filtered_gene_bc_matrices
+d.) raw_gene_bc_matrices
+
+AFTER THAT: S3 Integration. Users should be able to:
+-download matrices + web_summary.html
+-when clicking web_summary.html, should be taken to nice web page summary
+
+NOTE: can upload small pdf for initial testing purposes
+
+STEPS:
+1) upload a file to S3
+2) to db, add pointer to S3 file
+	a) add new column to samples table
+3) allow user to download file on frontend
 
 
 
