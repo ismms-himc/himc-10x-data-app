@@ -21,6 +21,12 @@ def get_samples():
     	sample_data.append({ "id": sample.id, 
                             "sample_id": sample.sample_id })
 
+    if request.args['_order'] == 'ASC':
+        # sort sample_data alphabetically by sample_id
+        sample_data.sort(key=lambda x: x['sample_id'])
+    elif request.args['_order'] == 'DESC':
+        sample_data.sort(key=lambda x: x['sample_id'], reverse=True)
+
     if 'q' in request.args:
     	# perform search using list comprehensions
     	query_string = request.args['q']
@@ -30,14 +36,9 @@ def get_samples():
     	# TODO: Return only the requested # of items
     	data_for_response = sample_data[:10]
 
-    print("Sample Data:")
-    print(data_for_response)
-    print("\n")
-    print("<h1> Samples Index </h1>")
+
     response = flask.Response(json.dumps(data_for_response))
     response.headers.add('X-Total-Count', len(data_for_response))
     response.headers.add('Access-Control-Expose-Headers', 'X-Total-Count')
-    print("RESPONSE:")
-    print(response)
-    # import pdb; pdb.set_trace()
+
     return(response)
