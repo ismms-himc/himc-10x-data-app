@@ -9,6 +9,8 @@ class Sample(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     sample_id = db.Column(db.String(255), nullable=False)
+    reference_transcriptome = db.Column(db.String(255))
+    web_summary_url = db.Column(db.String(255))
     # TODO: incorporate connection to AWS S3 for the following:
     # 1.) web_summary
     # 2.) filtered_gene_bc_matrices
