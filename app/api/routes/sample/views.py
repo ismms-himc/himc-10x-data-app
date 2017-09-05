@@ -19,13 +19,22 @@ def get_samples():
     for sample in samples:
     	# TODO: eventually modify this to send S3 info needed
     	sample_data.append({ "id": sample.id, 
-                            "sample_id": sample.sample_id })
+                            "sample_id": sample.sample_id,
+                            "reference_transcriptome": sample.reference_transcriptome,
+                            "web_summary_url": sample.web_summary_url })
 
     if request.args['_order'] == 'ASC':
-        # sort sample_data alphabetically by sample_id
-        sample_data.sort(key=lambda x: x['sample_id'])
+        if request.args['_sort'] == 'sample_id':
+            # sort sample_data alphabetically by sample_id
+            sample_data.sort(key=lambda x: x['sample_id'])
+        elif request.args['_sort'] == 'reference_transcriptome':
+            # sort sample_data alphabetically by reference_transcriptome
+            sample_data.sort(key=lambda x: x['reference_transcriptome'])
     elif request.args['_order'] == 'DESC':
-        sample_data.sort(key=lambda x: x['sample_id'], reverse=True)
+        if request.args['_sort'] == 'sample_id':
+            sample_data.sort(key=lambda x: x['sample_id'], reverse=True)
+        elif request.args['_sort'] == 'reference_transcriptome':
+            sample_data.sort(key=lambda x: x['reference_transcriptome'], reverse=True)
 
     if 'q' in request.args:
     	# perform search using list comprehensions
