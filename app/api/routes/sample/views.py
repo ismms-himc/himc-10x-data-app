@@ -3,6 +3,16 @@ from flask import request, Blueprint
 from app.api.models.sample import Sample
 import json
 
+import boto3
+# TODO: needed?
+import botocore
+
+import os
+
+s3 = boto3.resource('s3')
+bucket_name = 'himc-10x-data'
+bucket = s3.Bucket(bucket_name)
+
 sample_blueprint = Blueprint('sample_pages', __name__)
 
 @sample_blueprint.route('/samples', methods=['GET'])
@@ -11,15 +21,18 @@ sample_blueprint = Blueprint('sample_pages', __name__)
 # Returns all samples belonging to logged in user. HIMC staff will have access
 # to all samples.
 def get_samples():
-    print("IN HERE")
     samples = Sample.query.all()
     # TODO: better way to do this than sending array of json objects to frontend?
     # maybe by changing the restClient in App.js?
     # TODO: deal with when user filters search or only want to return requested # of items
     sample_data = []
     for sample in samples:
-    	# TODO: eventually modify this to send S3 info needed
-    	sample_data.append({ "id": sample.id, 
+        web_summary_filename = sample.web_summary_url
+
+        # bucket.download_file(web_summary_filename, 
+        #                 os.path.expanduser(f'~/Desktop/{web_summary_filename}'))
+
+        sample_data.append({ "id": sample.id,
                             "sample_id": sample.sample_id,
                             "reference_transcriptome": sample.reference_transcriptome,
                             "web_summary_url": sample.web_summary_url })

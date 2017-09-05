@@ -84,11 +84,10 @@ DETOUR:
 22.) Add sample routes and blueprints
 
 23.) Seed db with 3 toy samples via psql command line:
-INSERT INTO samples (sample_id) VALUES ('ABC');
-INSERT INTO samples (sample_id) VALUES ('DEF');
-INSERT INTO samples (sample_id) VALUES ('GHI');
-INSERT INTO samples (sample_id) VALUES ('JKL');
-INSERT INTO samples (sample_id) VALUES ('AYZ');
+INSERT INTO samples (sample_id, reference_transcriptome, web_summary_url) VALUES ('ABC', 'hg19', 'https://s3.us-east-2.amazonaws.com/himc-10x-data/web_summary.html');
+INSERT INTO samples (sample_id, reference_transcriptome) VALUES ('DEF', 'GRCh38');
+INSERT INTO samples (sample_id) VALUES ('GHI', 'hg19');
+
 
 24.) Add response for /samples API endpoint
 
@@ -97,9 +96,9 @@ INSERT INTO samples (sample_id) VALUES ('AYZ');
 
 NEXT: Add the following columns to samples table:
 a.) reference_transcriptome
-b.) web_summary
-c.) filtered_gene_bc_matrices
-d.) raw_gene_bc_matrices
+b.) web_summary (single file)
+c.) filtered_gene_bc_matrices (dir of files: 2 .tsv files, and 1 .mtx file)
+d.) raw_gene_bc_matrices (dir of files)
 
 AFTER THAT: S3 Integration. Users should be able to:
 -download matrices + web_summary.html
@@ -107,13 +106,16 @@ AFTER THAT: S3 Integration. Users should be able to:
 
 NOTE: can upload small pdf for initial testing purposes
 
-STEPS:
-1) upload a file to S3
-2) to db, add pointer to S3 file
-	a) add new column to samples table
-3) allow user to download file on frontend
 
+IN-PROGRESS:
+figure out how to pre-sign URLs upon sample download
+https://boto3.readthedocs.io/en/latest/guide/s3.html#generating-presigned-urls
 
+GOAL: for each sample, you have a button 'generate download link'
+when you click that, your frontend makes an ajax request to your backend asking the backend to generate and respond with a presigned url for the sample in question
+then, your frontend receives that JSON and updates the page so that there's a download link
+
+https://boto3.readthedocs.io/en/latest/reference/services/s3.html#S3.Client.generate_presigned_url
 
 DEBUGGING TOOLS:
 import pdb; pdb.set_trace()

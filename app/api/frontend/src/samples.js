@@ -1,8 +1,5 @@
 import React from 'react';
-import { List, Datagrid, TextField, Filter, TextInput, UrlField } from 'admin-on-rest';
-// import { List, TextField, Filter, TextInput } from 'admin-on-rest';
-// import Datagrid from "./admin-on-rest-custom/mui/list/Datagrid";
-
+import { List, Datagrid, TextField, Filter, TextInput, FileField } from 'admin-on-rest';
 
 // TODO: check if unneeded "Add Filter" button appears on top
 
@@ -16,14 +13,12 @@ const SampleFilter = (props) => (
     </Filter>
 );
 
-
-
 export const SampleList = (props) => (
     <List {...props} filters={<SampleFilter />} title="Samples">
         <Datagrid>
             <TextField source="sample_id" label="Sample ID"/>
             <TextField source="reference_transcriptome" label="Reference Transcriptome"/>
-            <UrlField source="web_summary_url" label="Web Summary" sortable={false} />
+            <FileField source="web_summary_url" label="Web Summary" title="web_summary.html" sortable={false} />
         </Datagrid>
     </List>
 );
