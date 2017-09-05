@@ -8,5 +8,4 @@ home_page_blueprint = Blueprint('home_page', __name__)
 def root_page():
     # TODO: render a login/signup page if user not logged in; otherwise, render
     # the Samples Dashboard
-    print("IN ROOT_PAGE FUNCTION")
     return "<h1>HELLO WORLD <h1>"

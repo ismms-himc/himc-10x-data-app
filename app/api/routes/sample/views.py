@@ -11,6 +11,7 @@ sample_blueprint = Blueprint('sample_pages', __name__)
 # Returns all samples belonging to logged in user. HIMC staff will have access
 # to all samples.
 def get_samples():
+    print("IN HERE")
     samples = Sample.query.all()
     # TODO: better way to do this than sending array of json objects to frontend?
     # maybe by changing the restClient in App.js?
@@ -23,18 +24,20 @@ def get_samples():
                             "reference_transcriptome": sample.reference_transcriptome,
                             "web_summary_url": sample.web_summary_url })
 
-    if request.args['_order'] == 'ASC':
-        if request.args['_sort'] == 'sample_id':
-            # sort sample_data alphabetically by sample_id
-            sample_data.sort(key=lambda x: x['sample_id'])
-        elif request.args['_sort'] == 'reference_transcriptome':
-            # sort sample_data alphabetically by reference_transcriptome
-            sample_data.sort(key=lambda x: x['reference_transcriptome'])
-    elif request.args['_order'] == 'DESC':
-        if request.args['_sort'] == 'sample_id':
-            sample_data.sort(key=lambda x: x['sample_id'], reverse=True)
-        elif request.args['_sort'] == 'reference_transcriptome':
-            sample_data.sort(key=lambda x: x['reference_transcriptome'], reverse=True)
+    if len(request.args) > 0:
+        if request.args['_order'] == 'ASC':
+            print('in here?')
+            if request.args['_sort'] == 'sample_id':
+                # sort sample_data alphabetically by sample_id
+                sample_data.sort(key=lambda x: x['sample_id'])
+            elif request.args['_sort'] == 'reference_transcriptome':
+                # sort sample_data alphabetically by reference_transcriptome
+                sample_data.sort(key=lambda x: x['reference_transcriptome'])
+        elif request.args['_order'] == 'DESC':
+            if request.args['_sort'] == 'sample_id':
+                sample_data.sort(key=lambda x: x['sample_id'], reverse=True)
+            elif request.args['_sort'] == 'reference_transcriptome':
+                sample_data.sort(key=lambda x: x['reference_transcriptome'], reverse=True)
 
     if 'q' in request.args:
     	# perform search using list comprehensions
@@ -43,8 +46,7 @@ def get_samples():
     	data_for_response = [x for x in sample_data if query_string.lower() in x['sample_id'].lower()]
     else:
     	# TODO: Return only the requested # of items
-    	data_for_response = sample_data[:10]
-
+        data_for_response = sample_data[:10]
 
     response = flask.Response(json.dumps(data_for_response))
     response.headers.add('X-Total-Count', len(data_for_response))
