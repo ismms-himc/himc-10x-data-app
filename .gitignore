@@ -22,3 +22,6 @@ app/api/frontend/yarn-error.log*
 
 *.pyc
 *egg-info
+
+bundle.js
+bundle.js.map
