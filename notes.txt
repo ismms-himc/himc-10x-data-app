@@ -122,3 +122,6 @@ import pdb; pdb.set_trace()
 
 
 TODO: delete app/api/frontend/src.posts.js
+
+
+NOTE: This branch uses admin-on-rest on the frontend. Frontend was swapped for custom frontend (with intention to integrate admin-on-rest) on 9/6/17.
