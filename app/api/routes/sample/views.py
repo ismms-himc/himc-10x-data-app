@@ -9,9 +9,9 @@ import botocore
 
 import os
 
-s3 = boto3.resource('s3')
-bucket_name = 'himc-10x-data'
-bucket = s3.Bucket(bucket_name)
+# s3 = boto3.resource('s3')
+# bucket_name = 'himc-10x-data'
+# bucket = s3.Bucket(bucket_name)
 
 sample_blueprint = Blueprint('sample_pages', __name__)
 
