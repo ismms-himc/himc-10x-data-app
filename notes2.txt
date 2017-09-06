@@ -1,0 +1,17 @@
+Integrating a custom frontend:
+1) add node_modules/, bundle.js, and bundle.js.map to .gitignore
+2) npm init --yes to create a package.json file
+3) create frontend folder with entry file
+4) npm install --save
+    - webpack
+    - react
+    - react-dom
+    - react-router-dom
+    - redux
+    - react-redux
+    - babel-core
+    - babel-loader
+    - babel-preset-react
+    - babel-preset-es2015
+5) add webpack.config.js file
+6) add app/api/static stylesheets and index.html

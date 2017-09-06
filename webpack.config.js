@@ -3,6 +3,7 @@ module.exports = {
   context: __dirname,
   entry: './frontend/himc_10x_data_app.jsx',
   output: {
+    // TODO: change output path
     path: path.resolve(__dirname, 'app', 'assets', 'javascripts'),
     filename: 'bundle.js'
   },
