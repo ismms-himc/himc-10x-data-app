@@ -13,5 +13,17 @@ Integrating a custom frontend:
     - babel-loader
     - babel-preset-react
     - babel-preset-es2015
+    - material-ui
+    - lodash
 5) add webpack.config.js file
 6) add app/api/static stylesheets and index.html
+7) Add samples_api_util.js
+8) Add samples_actions.js
+9) Add reducers (sample and root)
+10) create store.js
+11) Add root component-- responsible for rendering all of the app's React components
+12) Add SampleIndex component container
+
+
+TODO: Get entry file's Welcome h1 to render
+Add loading reducer and corresponding samples_actions
