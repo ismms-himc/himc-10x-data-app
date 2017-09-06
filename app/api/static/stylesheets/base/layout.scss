@@ -1,0 +1,14 @@
+// TODO: Is this used?
+
+@import 'fonts.scss';
+
+html {
+	position: relative;
+	height: 100%;
+}
+
+body {
+	margin: 0 auto;
+	font-family: 'Open Sans', Helvetica, Arial, $sans-serif;
+	font-size: 12px;
+}
