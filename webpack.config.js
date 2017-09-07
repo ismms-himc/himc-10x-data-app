@@ -25,9 +25,5 @@ module.exports = {
   devServer: {
     contentBase: './app/api/static/javascripts'
   },
-  // watchOptions: {
-  //   aggregateTimeout: 300,
-  //   poll: true
-  // },
   devtool: 'source-map'
 };
