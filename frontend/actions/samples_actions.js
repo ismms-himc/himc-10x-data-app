@@ -20,8 +20,8 @@ export const receiveSamples = function (samples) {
 //   errors
 // });
 
-export const requestAllSamples = () => (dispatch) => {
+export const requestSamples = () => (dispatch) => {
 	dispatch(loadSamples());
 	return APIUtil.fetchAllSamples()
-		.then(feedItems => dispatch(receiveSamples(samples)));
+		.then(samples => dispatch(receiveSamples(samples)));
 };
