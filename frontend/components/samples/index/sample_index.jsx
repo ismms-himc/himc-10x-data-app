@@ -96,18 +96,6 @@ export default class SampleIndex extends React.Component {
             <DragDropContext />
 
             <TableView
-              {/*tableCellTemplate={({ row, column, style }) => {
-                if (column.name === 'discount') {
-                  return (
-                    <ProgressBarCell value={row.discount * 100} style={style} />
-                  );
-                } else if (column.name === 'amount') {
-                  return (
-                    <HighlightedCell align={column.align} value={row.amount} style={style} />
-                  );
-                }
-                return undefined;
-              }} */}
               allowColumnReordering
             />
 

@@ -4,47 +4,49 @@ import ReactDOM from 'react-dom';
 import configureStore from './store/store';
 import Root from './components/root';
 
+{/*
+  // TODO: Testing Purposes only:
+  // SETUP:
+  // import fetchAllSamples from './util/samples_api_util.js';
+  // import * as sampleActions from './actions/samples_actions.js'
+  // window.fetchAllSamples = fetchAllSamples;
+  // window.sampleActions = sampleActions;
+  //
+  // TEST:
+  // const getSuccess = samples => console.log(sampleActions.receiveSamples(samples));
+  // sampleActions.fetchAllSamples().then(getSuccess);
 
-// TODO: Testing Purposes only:
-// SETUP:
-// import fetchAllSamples from './util/samples_api_util.js';
-// import * as sampleActions from './actions/samples_actions.js'
-// window.fetchAllSamples = fetchAllSamples;
-// window.sampleActions = sampleActions;
-//
-// TEST:
-// const getSuccess = samples => console.log(sampleActions.receiveSamples(samples));
-// sampleActions.fetchAllSamples().then(getSuccess);
+  // TODO: Testing Purposes only:
+  // SETUP:
+  // let store = configureStore();
+  // window.getState = store.getState;
+  // window.dispatch = store.dispatch;
+  // TEST:
+  // getState(); // should return initial app state
+  //
+  // const getSuccess = pokemon => dispatch(sampleActions.receiveSamples(samples));
+  // sampleActions.fetchAllSamples().then(getSuccess);
+  //
+  // getState(); // should return the app state populated with samples
 
-// TODO: Testing Purposes only:
-// SETUP:
-// let store = configureStore();
-// window.getState = store.getState;
-// window.dispatch = store.dispatch;
-// TEST:
-// getState(); // should return initial app state
-//
-// const getSuccess = pokemon => dispatch(sampleActions.receiveSamples(samples));
-// sampleActions.fetchAllSamples().then(getSuccess);
-//
-// getState(); // should return the app state populated with samples
+  // TODO: Testing Purposes only:
+  // TEST:
+  // getState(); // should return initial app state
+  // dispatch(requestSamples());
+  // getState(); // should return the app state populated with samples
 
-// TODO: Testing Purposes only:
-// TEST:
-// getState(); // should return initial app state
-// dispatch(requestSamples());
-// getState(); // should return the app state populated with samples
+  // TODO: Testing Purposes only:
+  // SETUP:
+  // import selectAllSamples from './reducers/selectors.js';
+  // window.selectAllSamples = selectAllSamples;
+  // TEST:
+  // const initialState = getState();
+  // selectAllSamples(initialState); //=> []
+  // dispatch(sampleActions.requestSamples());
+  // const populatedState = getState();
+  // selectAllSamples(populatedState); //=> array of sample objects!
 
-// TODO: Testing Purposes only:
-// SETUP:
-// import selectAllSamples from './reducers/selectors.js';
-// window.selectAllSamples = selectAllSamples;
-// TEST:
-// const initialState = getState();
-// selectAllSamples(initialState); //=> []
-// dispatch(sampleActions.requestSamples());
-// const populatedState = getState();
-// selectAllSamples(populatedState); //=> array of sample objects!
+  */}
 
 
 
@@ -53,6 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(<h1>welcome!</h1>, root);
 });
 
+{/*
 // TODO: Once the above works, implement the below:
 // document.addEventListener('DOMContentLoaded', () => {
 //   const store = configureStore();
@@ -65,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // TODO: Once the above works, implement the below:
 
-{/* document.addEventListener('DOMContentLoaded', () => {
+ document.addEventListener('DOMContentLoaded', () => {
     const root = document.getElementById('root');
     let store;
     if (window.currentUser) {

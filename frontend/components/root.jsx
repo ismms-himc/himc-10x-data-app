@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import SampleIndexContainer from './samples/index/sample_index_container';
-// import { Router, Route, IndexRoute, IndexRedirect, hashHistory } from 'react-router';
+// import SampleIndexContainer from './samples/index/sample_index_container';
+import { Router, Route, IndexRoute, IndexRedirect, hashHistory } from 'react-router';
 // import App from './app';
 // import HomeContainer from './home/home_container';
 // import LogInFormContainer from './login/login_form_container';
@@ -15,8 +15,9 @@ const Root = ({ store }) => (
 
 export default Root;
 
-// TODO: After testing above, implement this:
-{/* const Root = ({ store }) => (
+{/*
+  // TODO: After testing above, implement this:
+ const Root = ({ store }) => (
   <Provider store={store}>
     <Router history={ hashHistory }>
       <Route path="/" component={ SampleIndexContainer }/>
@@ -24,7 +25,8 @@ export default Root;
   </Provider>
 ); */}
 
-// TODO: After figuring out auth backend, implement this:
+{/*
+  // TODO: After figuring out auth backend, implement this:
 // must create/import App component, HomeContainer, SignUpFormContainer, LogInFormContainer
 
 // const preloadedState = window.currentUser ?
@@ -48,7 +50,7 @@ export default Root;
 //     replace('/login');
 //   }
 // }
-{/*}
+
 const Root = ({ store }) => (
   <Provider store={store}>
     <Router history={ hashHistory }>
