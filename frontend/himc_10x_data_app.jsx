@@ -4,18 +4,17 @@ import ReactDOM from 'react-dom';
 import configureStore from './store/store';
 import Root from './components/root';
 
-{/*
-  // TODO: Testing Purposes only:
-  // SETUP:
-  // import fetchAllSamples from './util/samples_api_util.js';
-  // import * as sampleActions from './actions/samples_actions.js'
-  // window.fetchAllSamples = fetchAllSamples;
-  // window.sampleActions = sampleActions;
-  //
-  // TEST:
-  // const getSuccess = samples => console.log(sampleActions.receiveSamples(samples));
-  // sampleActions.fetchAllSamples().then(getSuccess);
+import {fetchAllSamples} from './util/samples_api_util.js';
+import * as sampleActions from './actions/samples_actions.js'
+window.fetchAllSamples = fetchAllSamples;
+window.sampleActions = sampleActions;
 
+document.addEventListener('DOMContentLoaded', () => {
+  const root = document.getElementById('root');
+  ReactDOM.render(<h1>welcome!</h1>, root);
+});
+
+{/*
   // TODO: Testing Purposes only:
   // SETUP:
   // let store = configureStore();
@@ -50,10 +49,6 @@ import Root from './components/root';
 
 
 
-document.addEventListener('DOMContentLoaded', () => {
-  const root = document.getElementById('root');
-  ReactDOM.render(<h1>welcome!</h1>, root);
-});
 
 {/*
 // TODO: Once the above works, implement the below:
