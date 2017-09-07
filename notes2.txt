@@ -26,4 +26,10 @@ Integrating a custom frontend:
 
 
 TODO: Get entry file's Welcome h1 to render
-Add loading reducer and corresponding samples_actions
+
+
+SETUP:
+- to build a new bundle.js: npm run webpack
+- running the dev server: npm start
+    NOTE: not currently working. still have to run the following in order to
+    detect changes: npm run webpack
