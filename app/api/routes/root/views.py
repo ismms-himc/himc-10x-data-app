@@ -1,5 +1,5 @@
 import flask
-from flask import Blueprint
+from flask import Blueprint, render_template
 
 home_page_blueprint = Blueprint('home_page', __name__)
 
@@ -8,4 +8,4 @@ home_page_blueprint = Blueprint('home_page', __name__)
 def root_page():
     # TODO: render a login/signup page if user not logged in; otherwise, render
     # the Samples Dashboard
-    return "<h1>HELLO WORLD <h1>"
+    return render_template('index.html')
