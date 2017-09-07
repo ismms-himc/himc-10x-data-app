@@ -1,5 +1,4 @@
-1.) cd app/api/frontend
-sudo npm install
+1.) npm install
 sudo yarn start OR sudo npm start
 
 2.) cd ../../..
@@ -11,7 +10,7 @@ $ pip3 install -r requirements.txt
 3.) cd ..
 export APP_SETTINGS="app.config.DevelopmentConfig"
 
-4.) 
+4.)
 (env)$ python3
 >>> import os
 >>> os.urandom(24)
