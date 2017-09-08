@@ -6,7 +6,7 @@ import rootReducer from '../reducers/root_reducer';
 // TODO: remove logger in production
 
 const configureStore = function () {
-  return createStore(rootReducer, applyMiddleware(logger));
+  return createStore(rootReducer, applyMiddleware(logger, thunk));
 };
 
 {/*

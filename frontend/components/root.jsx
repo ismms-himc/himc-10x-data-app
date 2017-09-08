@@ -1,29 +1,31 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-// import SampleIndexContainer from './samples/index/sample_index_container';
-import { Router, Route, IndexRoute, IndexRedirect, hashHistory } from 'react-router';
+import SampleIndexContainer from './samples/index/sample_index_container';
+import { BrowserRouter, Route } from 'react-router-dom';
+// import { Router, Route, IndexRoute, IndexRedirect, hashHistory } from 'react-router';
 // import App from './app';
 // import HomeContainer from './home/home_container';
 // import LogInFormContainer from './login/login_form_container';
 // import SignUpFormContainer from './signup/signup_form_container';
 
-const Root = ({ store }) => (
+{/*const Root = ({ store }) => (
   <Provider store={store}>
     <div>Hello, world!</div>
   </Provider>
 );
 
-export default Root;
+export default Root;*/}
 
-{/*
-  // TODO: After testing above, implement this:
+
  const Root = ({ store }) => (
   <Provider store={store}>
-    <Router history={ hashHistory }>
+    <BrowserRouter>
       <Route path="/" component={ SampleIndexContainer }/>
-    </Router>
+    </BrowserRouter>
   </Provider>
-); */}
+);
+
+export default Root;
 
 {/*
   // TODO: After figuring out auth backend, implement this:
