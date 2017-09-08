@@ -5,7 +5,7 @@ import { requestSamples } from '../../../actions/samples_actions';
 
 function mapStateToProps(state) {
   return {
-    runs: selectAllSamples(state),
+    samples: selectAllSamples(state),
     loading: state.loading.indexLoading
   };
 }

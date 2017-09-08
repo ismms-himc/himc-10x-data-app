@@ -1,11 +1,12 @@
 import React from 'react';
-import LoadingIcon from '../loading/loading_icon';
+import LoadingIcon from '../../loading/loading_icon';
 
 import {
   SortingState, SelectionState, FilteringState, PagingState, GroupingState,
   LocalFiltering, LocalGrouping, LocalPaging, LocalSorting,
   ColumnOrderState,
 } from '@devexpress/dx-react-grid';
+
 import {
   Grid,
   TableView, TableHeaderRow, TableFilterRow, TableSelection, TableGroupRow,
@@ -24,17 +25,20 @@ export default class SampleIndex extends React.Component {
       ],
       // TODO: will the below cause a bug? we technically have no samples until after
       // component mounts
-      rows: this.props.samples, // array of sample objects
+      // rows: this.props.samples, // array of sample objects
       allowedPageSizes: [5, 10, 15],
     };
   }
 
   componentDidMount() {
     this.props.requestSamples();
+    // TODO: is detting s
+    this.setState({ rows: this.props.samples });
   }
 
   render() {
     const { samples, loading } = this.props;
+
     // TODO: sort samples as needed
     const { rows, columns, allowedPageSizes } = this.state;
 
@@ -59,7 +63,14 @@ export default class SampleIndex extends React.Component {
           </ul>
         </section>
       );*/}
-
+      console.log('samples');
+      console.log(samples);
+      console.log('rows');
+      console.log(rows);
+      console.log('columns');
+      console.log(columns);
+      console.log('this.state');
+      console.log(this.state);
       return (
         <div className='samples-index'>
           <Grid
@@ -67,18 +78,13 @@ export default class SampleIndex extends React.Component {
             columns={columns}>
             <ColumnOrderState defaultOrder={columns.map(column => column.name)} />
 
-             {/*}<FilteringState
-              defaultFilters={[{ columnName: 'saleDate', value: '2016-02' }]}
-            />*/}
+            <FilteringState/>
             <SortingState
               defaultSorting={[
                 { columnName: 'sample_id', direction: 'asc' },
               ]}
             />
-          {/*  <GroupingState
-              defaultGrouping={[{ columnName: 'product' }]}
-              defaultExpandedGroups={['EnviroCare Max']}
-            /> */}
+            <GroupingState />
             <PagingState
               defaultCurrentPage={0}
               defaultPageSize={10}
@@ -86,7 +92,7 @@ export default class SampleIndex extends React.Component {
 
             <LocalFiltering />
             <LocalSorting />
-            <LocalGrouping />
+            {/*<LocalGrouping />*/}
             <LocalPaging />
 
             <SelectionState
