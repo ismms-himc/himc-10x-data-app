@@ -1,0 +1,90 @@
+import {fetchAllSamples} from './util/samples_api_util.js';
+import * as sampleActions from './actions/samples_actions.js'
+window.fetchAllSamples = fetchAllSamples;
+window.sampleActions = sampleActions;
+
+{/*
+const getSuccess = samples => console.log(sampleActions.receiveSamples(samples));
+fetchAllSamples().then(getSuccess);
+document.addEventListener('DOMContentLoaded', () => {
+  const root = document.getElementById('root');
+  ReactDOM.render(<h1>welcome!</h1>, root);
+});
+*/}
+
+{/*
+  // TODO: Testing Purposes only:
+  // SETUP:
+  // let store = configureStore();
+  // window.getState = store.getState;
+  // window.dispatch = store.dispatch;
+  // TEST:
+  // getState(); // should return initial app state
+  //
+  // let getSuccess = samples => dispatch(sampleActions.receiveSamples(samples));
+  // fetchAllSamples().then(getSuccess);
+  //
+  // getState(); // should return the app state populated with samples
+
+  document.addEventListener('DOMContentLoaded', () => {
+    let store = configureStore();
+    window.getState = store.getState;
+    window.dispatch = store.dispatch;
+    const root = document.getElementById('root');
+    ReactDOM.render(<h1>hi!</h1>, root);
+  }); */}
+
+
+
+{/*
+  // TODO: Testing Purposes only:
+  // TEST:
+  // getState(); // should return initial app state
+  // dispatch(sampleActions.requestSamples());
+  // getState(); // should return the app state populated with samples
+  document.addEventListener('DOMContentLoaded', () => {
+    let store = configureStore();
+    window.getState = store.getState;
+    window.dispatch = store.dispatch;
+    const root = document.getElementById('root');
+    ReactDOM.render(<h1>hi!</h1>, root);
+  });
+  */}
+
+
+
+{/*
+  // TODO: Testing Purposes only:
+  // SETUP:
+  // import selectAllSamples from './reducers/selectors.js';
+  // window.selectAllSamples = selectAllSamples;
+  // TEST:
+  // const initialState = getState();
+  // selectAllSamples(initialState); //=> []
+  // dispatch(sampleActions.requestSamples());
+  // const populatedState = getState();
+  // selectAllSamples(populatedState); //=> array of sample objects!
+
+  import {selectAllSamples} from './reducers/selectors.js';
+  window.selectAllSamples = selectAllSamples;
+
+  document.addEventListener('DOMContentLoaded', () => {
+    let store = configureStore();
+    window.getState = store.getState;
+    window.dispatch = store.dispatch;
+    const root = document.getElementById('root');
+    ReactDOM.render(<h1>hi!</h1>, root);
+  });
+*/}
+
+{/*
+// TODO: Once the above works, implement the below:
+// document.addEventListener('DOMContentLoaded', () => {
+//   const store = configureStore();
+//   const root = document.getElementById('root');
+//   ReactDOM.render(<Root store={store}/>, root);
+// });
+
+// TODO: Testing Purposes only:
+// Test that your Root component is properly rendered before moving on.
+*/}
