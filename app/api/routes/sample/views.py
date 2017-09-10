@@ -25,15 +25,10 @@ def get_samples():
     # TODO: deal with when user filters search or only want to return requested # of items
     sample_data = {}
     for sample in samples:
-        web_summary_filename = sample.web_summary_url
-
-        # bucket.download_file(web_summary_filename,
-        #                 os.path.expanduser(f'~/Desktop/{web_summary_filename}'))
-
         sample_data[int(sample.id)] = ({ "id": sample.id,
                             "sample_id": sample.sample_id,
                             "reference_transcriptome": sample.reference_transcriptome,
-                            "web_summary_url": sample.web_summary_url })
+                            "run_id": sample.run_id })
         # import pdb; pdb.set_trace()
     # if len(request.args) > 0:
     #     if request.args['_order'] == 'ASC':
