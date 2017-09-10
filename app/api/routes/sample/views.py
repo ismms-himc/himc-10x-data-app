@@ -3,15 +3,13 @@ from flask import request, Blueprint
 from app.api.models.sample import Sample
 import json
 
-# import boto3
+import boto3
 # # TODO: needed?
 # import botocore
 
 import os
 
-# s3 = boto3.resource('s3')
-# bucket_name = 'himc-10x-data'
-# bucket = s3.Bucket(bucket_name)
+SAMPLE_BUCKET_NAME = 'himc-10x-data'
 
 sample_blueprint = Blueprint('sample_pages', __name__)
 
@@ -66,3 +64,25 @@ def get_samples():
     response.headers.add('Access-Control-Expose-Headers', 'X-Total-Count')
 
     return(response)
+
+@sample_blueprint.route('/samples/<int:sample_id>/web_summary_url', methods=['GET'])
+# Returns a presigned S3 URL for a sample's web summary.
+def get_web_summary_url(sample_id):
+    s3 = boto3.client('s3')
+    sample = Sample.query.get(sample_id)
+
+    key = '{run_id}/{reference_transcriptome}/{sample_id}/web_summary.html'.format(
+        run_id=sample.run_id,
+        reference_transcriptome=sample.reference_transcriptome,
+        sample_id=sample.sample_id)
+
+    # import pdb; pdb.set_trace()
+    web_summary_url = s3.generate_presigned_url(
+        ClientMethod='get_object',
+        ExpiresIn=3600,
+        Params={
+            'Bucket': SAMPLE_BUCKET_NAME,
+            'Key': key
+        }
+    )
+    return flask.Response(json.dumps({"web_summary_url": web_summary_url}))
