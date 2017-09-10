@@ -23,24 +23,19 @@ export default class SampleIndex extends React.Component {
         { name: 'reference_transcriptome', title: 'Reference Transcriptome' },
         { name: 'web_summary_url', title: 'Web Summary'}
       ],
-      // TODO: will the below cause a bug? we technically have no samples until after
-      // component mounts
-      // rows: this.props.samples, // array of sample objects
       allowedPageSizes: [5, 10, 15],
     };
   }
 
   componentDidMount() {
     this.props.requestSamples();
-    // TODO: is detting s
-    this.setState({ rows: this.props.samples });
   }
 
   render() {
     const { samples, loading } = this.props;
+    const rows = this.props.samples;
 
-    // TODO: sort samples as needed
-    const { rows, columns, allowedPageSizes } = this.state;
+    const { columns, allowedPageSizes } = this.state;
 
     if (loading) {
       return <LoadingIcon />;
