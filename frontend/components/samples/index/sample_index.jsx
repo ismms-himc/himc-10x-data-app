@@ -1,17 +1,17 @@
 import React from 'react';
 import LoadingIcon from '../../loading/loading_icon';
-
 import {
   SortingState, SelectionState, FilteringState, PagingState, GroupingState,
   LocalFiltering, LocalGrouping, LocalPaging, LocalSorting,
   ColumnOrderState,
 } from '@devexpress/dx-react-grid';
-
 import {
   Grid,
   TableView, TableHeaderRow, TableFilterRow, TableSelection, TableGroupRow,
   PagingPanel, GroupingPanel, DragDropContext,
 } from '@devexpress/dx-react-grid-bootstrap3';
+import { cloneDeep } from 'lodash';
+import $ from 'jquery';
 
 export default class SampleIndex extends React.Component {
   constructor(props) {
@@ -21,19 +21,59 @@ export default class SampleIndex extends React.Component {
       columns: [
         { name: 'sample_id', title: 'Sample ID'},
         { name: 'reference_transcriptome', title: 'Reference Transcriptome' },
-        { name: 'web_summary_url', title: 'Web Summary'}
+        { name: 'viewWebSummaryButton', title: 'View web summary'}
       ],
       allowedPageSizes: [5, 10, 15],
     };
+
+    this.viewWebSummary = this.viewWebSummary.bind(this)
+    this.addViewWebSummaryButton = this.addViewWebSummaryButton.bind(this)
+    this.fetchWebSummaryUrl = this.fetchWebSummaryUrl.bind(this)
   }
 
   componentDidMount() {
     this.props.requestSamples();
   }
 
+  fetchWebSummaryUrl(sampleId) {
+    $.ajax({
+      method: 'GET',
+      url: `/samples/${sampleId}/web_summary_url`
+    })
+    .done(function (data, textStatus, response) {
+      alert(`view web summary for ${sampleId}`)
+      data = JSON.parse(data);
+      window.open(data['web_summary_url'])
+    })
+    .fail(function (response, textStatus, errorThrown) {
+      {/*
+        TODO: handle failures better
+        */}
+      alert('request failed')
+    });
+  }
+
+  viewWebSummary(sampleId) {
+    {/*
+      disable download button?
+      put up the loading modal
+      make request to backend
+      take down loading modal
+      open the presigned URL
+      */}
+
+    this.fetchWebSummaryUrl(sampleId)
+  }
+
+  addViewWebSummaryButton(sample) {
+    const viewWebSummaryButton = <button type="submit" onClick={() => this.viewWebSummary(sample['id'])}>View web summary!</button>;
+    const sampleClone = cloneDeep(sample);
+    sampleClone['viewWebSummaryButton'] = viewWebSummaryButton;
+    return sampleClone;
+  }
+
   render() {
     const { samples, loading } = this.props;
-    const rows = this.props.samples;
 
     const { columns, allowedPageSizes } = this.state;
 
@@ -60,16 +100,23 @@ export default class SampleIndex extends React.Component {
       );*/}
       console.log('samples');
       console.log(samples);
-      console.log('rows');
-      console.log(rows);
       console.log('columns');
       console.log(columns);
       console.log('this.state');
       console.log(this.state);
+
+      const samplesWithViewWebSummaryButton = samples.map(this.addViewWebSummaryButton)
+
+      {/*
+        should be possible to make a button that triggers a file download with
+        something like
+        <button type="submit" onclick="window.open('file.doc')">Download!</button>
+        although the onclick function would have to be more complex
+        */}
       return (
         <div className='samples-index'>
           <Grid
-            rows={rows}
+            rows={samplesWithViewWebSummaryButton}
             columns={columns}>
             <ColumnOrderState defaultOrder={columns.map(column => column.name)} />
 
