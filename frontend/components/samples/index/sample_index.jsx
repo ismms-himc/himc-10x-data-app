@@ -152,7 +152,6 @@ export default class SampleIndex extends React.Component {
             <PagingPanel
               allowedPageSizes={allowedPageSizes}
             />
-            <TableSelection />
             <GroupingPanel allowSorting allowDragging />
             <TableGroupRow />
 
