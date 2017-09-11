@@ -19,12 +19,12 @@ from flask_sqlalchemy import SQLAlchemy
 # from flask.ext.cors import cross_origin
 
 # TODO: needed?
-# Default config vals 
+# Default config vals
 # THEME = 'default' if os.environ.get('THEME') is None else os.environ.get('THEME')
 # FLASK_DEBUG = 'false' if os.environ.get('FLASK_DEBUG') is None else os.environ.get('FLASK_DEBUG')
 
 # Create the Flask app
-app = Flask(__name__)
+app = Flask(__name__, static_folder='app/api/static')
 
 app_settings = os.getenv(
     'APP_SETTINGS',
