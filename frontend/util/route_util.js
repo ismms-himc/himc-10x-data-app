@@ -19,17 +19,27 @@ const Protected = ({ component: Component, path, loggedIn }) => (
      loggedIn ? (
       <Component {...props} />
     ) : (
-      console.log('redirecting to /login')
+      <Redirect to="/" />
     )
   )} />
 );
+
+{/*const Protected = function ({ component: Component, path, loggedIn }) {
+  if (loggedIn) {
+    return (<Route path={path} render={<Component {...props} />}/>);
+  } else {
+    return (<Redirect to="/" path="/"/>);
+  }
+}*/}
+
+
 
 const RedirectedToSamplesIndex = ({ component: Component, path, loggedIn }) => (
   <Route path={path} render={(props) => (
      loggedIn ? (
       <Redirect to="/samples" />
     ) : (
-      null
+      <Component {...props} />
     )
   )} />
 );
@@ -37,7 +47,7 @@ const RedirectedToSamplesIndex = ({ component: Component, path, loggedIn }) => (
 {/*TODO: change to this:
     {loggedIn: Boolean(state.session.currentUser)} */}
 const mapStateToProps = state => (
-  {loggedIn: false}
+  {loggedIn: true}
 );
 
 {/* export const AuthRoute = withRouter(connect(mapStateToProps, null)(Auth));*/}
