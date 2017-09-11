@@ -85,7 +85,7 @@ export default class SampleIndex extends React.Component {
 
       return (
         <div className='samples-index'>
-          <h2>My Samples</h2>
+          <h2>Samples</h2>
           <Grid
             rows={samplesWithViewWebSummaryButton}
             columns={columns}>
