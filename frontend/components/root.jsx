@@ -1,10 +1,13 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import SampleIndexContainer from './samples/index/sample_index_container';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
+import { IndexRoute, Redirect } from 'react-router';
+import App from './app';
+import HomeContainer from './home/home_container';
+
+
 // import { Router, Route, IndexRoute, IndexRedirect, hashHistory } from 'react-router';
-// import App from './app';
-// import HomeContainer from './home/home_container';
 // import LogInFormContainer from './login/login_form_container';
 // import SignUpFormContainer from './signup/signup_form_container';
 
@@ -17,13 +20,41 @@ import { BrowserRouter, Route } from 'react-router-dom';
 export default Root;*/}
 
 
- const Root = ({ store }) => (
+ {/*
+   This works:
+   const Root = ({ store }) => (
   <Provider store={store}>
     <BrowserRouter>
       <Route path="/" component={ SampleIndexContainer }/>
     </BrowserRouter>
   </Provider>
+);*/}
+
+
+{/*TODO: replace the functions below. For testing purposes only: */}
+function redirectIfLoggedIn() {
+  return <Redirect to="/samples"/>
+}
+
+function requireLogIn() {
+  console.log('requiring login');
+}
+
+
+const Root = ({ store }) => (
+  <Provider store={store}>
+    <BrowserRouter>
+      <App/>
+      {/*<Route path="/" component={ App }/>
+        <IndexRoute component={ HomeContainer } onEnter={redirectIfLoggedIn}/>
+      <Route
+        path='/samples'
+        component={ SampleIndexContainer }
+        onEnter={ requireLogIn }/> */}
+    </BrowserRouter>
+  </Provider>
 );
+
 
 export default Root;
 
