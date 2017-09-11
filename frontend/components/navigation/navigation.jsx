@@ -1,52 +1,41 @@
 import React from 'react';
 import { Link, hashHistory } from 'react-router';
+import AppBar from 'material-ui/AppBar';
+import IconButton from 'material-ui/IconButton';
+import FlatButton from 'material-ui/FlatButton';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 
-const styles = {
-  root: {
-    marginTop: 30,
-    width: '100%',
-  },
-  flex: {
-    flex: 1,
-  },
-  menuButton: {
-    marginLeft: 12,
-    marginRight: 20,
-  },
+export default class Navigation extends React.Component {
+  constructor(props){
+    super(props);
+  }
+
+  getChildContext() {
+    return { muiTheme: getMuiTheme(baseTheme) };
+  }
+
+  render() {
+    if (this.props.currentUser) {
+      return(<AppBar
+        title={<span>HIMC Single-Cell Sequencing</span>}
+        iconElementLeft={<p></p>}
+        iconElementRight={<FlatButton label="Log Out" />}
+        />);
+    } else {
+      return(<AppBar
+        title={<span>HIMC Single-Cell Sequencing</span>}
+        iconElementLeft={<p></p>}
+        iconElementRight={<FlatButton label="Log In" />}
+        />);
+    }
+  }
+}
+
+function getChildContext() {
+  return { muiTheme: getMuiTheme(baseTheme) };
+}
+
+Navigation.childContextTypes = {
+    muiTheme: React.PropTypes.object.isRequired,
 };
-
-const Navigation = function (props) {
-  function redirectTo(url) {
-    return function (e) {
-      e.preventDefault();
-      hashHistory.push(url);
-    };
-  }
-
-  if (props.currentUser) {
-    <div className={styles.root}>
-      <AppBar position="static">
-        <Toolbar disableGutters>
-          <Typography type="title" color="inherit" className={styles.flex}>
-            HIMC Single-Cell Sequencing
-          </Typography>
-          <Button color="contrast">Log Out</Button>
-        </Toolbar>
-      </AppBar>
-    </div>
-  }
-  else {
-    <div className={styles.root}>
-      <AppBar position="static">
-        <Toolbar disableGutters>
-          <Typography type="title" color="inherit" className={styles.flex}>
-            HIMC Single-Cell Sequencing
-          </Typography>
-          <Button color="contrast">Log In</Button>
-        </Toolbar>
-      </AppBar>
-    </div>
-  }
-};
-
-export default withStyles(styles)(Navigation);
