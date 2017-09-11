@@ -39,7 +39,7 @@ export default class SampleIndex extends React.Component {
   fetchWebSummaryUrl(sampleId) {
     $.ajax({
       method: 'GET',
-      url: `/samples/${sampleId}/web_summary_url`
+      url: `/api/samples/${sampleId}/web_summary_url`
     })
     .done(function (data, textStatus, response) {
       data = JSON.parse(data);
