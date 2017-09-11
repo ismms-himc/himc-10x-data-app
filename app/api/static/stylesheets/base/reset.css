@@ -1,5 +1,6 @@
+/*Removed button from below */
 html, body, main ul, h1, h2, h4, h6
-p, form, input, section, nav, img, button {
+p, form, input, section, nav, img {
   margin: 0;
   padding: 0;
   border: 0;
@@ -27,14 +28,14 @@ img {
   height: auto;
 }
 
-input[type="password"],
+/*input[type="password"],
 input[type="text"],
 input[type="submit"],
 button {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-}
+}*/
 
 button,
 input[type="submit"] {
