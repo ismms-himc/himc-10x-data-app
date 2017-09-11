@@ -41,7 +41,6 @@ export default class SampleIndex extends React.Component {
       url: `/samples/${sampleId}/web_summary_url`
     })
     .done(function (data, textStatus, response) {
-      alert(`view web summary for ${sampleId}`)
       data = JSON.parse(data);
       window.open(data['web_summary_url'])
     })
@@ -54,12 +53,12 @@ export default class SampleIndex extends React.Component {
   }
 
   viewWebSummary(sampleId) {
-    {/*
+    {/* TODO:
       disable download button?
       put up the loading modal
-      make request to backend
+      make request to backend - done
       take down loading modal
-      open the presigned URL
+      open the presigned URL - done
       */}
 
     this.fetchWebSummaryUrl(sampleId)
@@ -87,32 +86,9 @@ export default class SampleIndex extends React.Component {
                 </div>
               );
     } else {
-      {/*return (
-        <section className="sample-index">
-          <h2>Samples</h2>
-          <ul className='samples-list'>
-            { samples.map((sample, idx) => {
-                return <SampleIndexItem key={idx} feedItem={sample} />;
-              })
-            }
-          </ul>
-        </section>
-      );*/}
-      console.log('samples');
-      console.log(samples);
-      console.log('columns');
-      console.log(columns);
-      console.log('this.state');
-      console.log(this.state);
 
       const samplesWithViewWebSummaryButton = samples.map(this.addViewWebSummaryButton)
 
-      {/*
-        should be possible to make a button that triggers a file download with
-        something like
-        <button type="submit" onclick="window.open('file.doc')">Download!</button>
-        although the onclick function would have to be more complex
-        */}
       return (
         <div className='samples-index'>
           <Grid
@@ -134,7 +110,6 @@ export default class SampleIndex extends React.Component {
 
             <LocalFiltering />
             <LocalSorting />
-            {/*<LocalGrouping />*/}
             <LocalPaging />
 
             <SelectionState
