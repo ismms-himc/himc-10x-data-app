@@ -20,8 +20,9 @@ export default class SampleIndex extends React.Component {
     this.state = {
       columns: [
         { name: 'sample_id', title: 'Sample ID'},
+        { name: 'run_id', title: 'Run ID'},
         { name: 'reference_transcriptome', title: 'Reference Transcriptome' },
-        { name: 'viewWebSummaryButton', title: 'View web summary'}
+        { name: 'viewWebSummaryButton', title: 'Web Summary'}
       ],
       allowedPageSizes: [5, 10, 15],
     };
@@ -65,7 +66,7 @@ export default class SampleIndex extends React.Component {
   }
 
   addViewWebSummaryButton(sample) {
-    const viewWebSummaryButton = <button type="submit" onClick={() => this.viewWebSummary(sample['id'])}>View web summary!</button>;
+    const viewWebSummaryButton = <button type="submit" onClick={() => this.viewWebSummary(sample['id'])}>View Web Summary</button>;
     const sampleClone = cloneDeep(sample);
     sampleClone['viewWebSummaryButton'] = viewWebSummaryButton;
     return sampleClone;
@@ -78,19 +79,13 @@ export default class SampleIndex extends React.Component {
 
     if (loading) {
       return <LoadingIcon />;
-    } else if (samples.length === 0) {
-      return (
-                <div className='empty-index'>
-                  <h2>Samples</h2>
-                  <h4>There are no samples to display.</h4>
-                </div>
-              );
     } else {
 
       const samplesWithViewWebSummaryButton = samples.map(this.addViewWebSummaryButton)
 
       return (
         <div className='samples-index'>
+          <h2>My Samples</h2>
           <Grid
             rows={samplesWithViewWebSummaryButton}
             columns={columns}>
@@ -102,7 +97,6 @@ export default class SampleIndex extends React.Component {
                 { columnName: 'sample_id', direction: 'asc' },
               ]}
             />
-            <GroupingState />
             <PagingState
               defaultCurrentPage={0}
               defaultPageSize={10}
@@ -127,8 +121,6 @@ export default class SampleIndex extends React.Component {
             <PagingPanel
               allowedPageSizes={allowedPageSizes}
             />
-            <GroupingPanel allowSorting allowDragging />
-            <TableGroupRow />
 
           </Grid>
         </div>
