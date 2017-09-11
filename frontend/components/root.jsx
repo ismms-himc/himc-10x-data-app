@@ -30,27 +30,10 @@ export default Root;*/}
   </Provider>
 );*/}
 
-
-{/*TODO: replace the functions below. For testing purposes only: */}
-function redirectIfLoggedIn() {
-  return <Redirect to="/samples"/>
-}
-
-function requireLogIn() {
-  console.log('requiring login');
-}
-
-
 const Root = ({ store }) => (
   <Provider store={store}>
     <BrowserRouter>
       <App/>
-      {/*<Route path="/" component={ App }/>
-        <IndexRoute component={ HomeContainer } onEnter={redirectIfLoggedIn}/>
-      <Route
-        path='/samples'
-        component={ SampleIndexContainer }
-        onEnter={ requireLogIn }/> */}
     </BrowserRouter>
   </Provider>
 );
