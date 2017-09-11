@@ -13,7 +13,7 @@ SAMPLE_BUCKET_NAME = 'himc-10x-data'
 
 sample_blueprint = Blueprint('sample_pages', __name__)
 
-@sample_blueprint.route('/samples', methods=['GET'])
+@sample_blueprint.route('/api/samples', methods=['GET'])
 # @cross_origin() # in Nick's hack; TODO: confirm CSRF protection works
 # TODO: only show samples that belong to logged in user
 # Returns all samples belonging to logged in user. HIMC staff will have access
@@ -60,7 +60,7 @@ def get_samples():
 
     return(response)
 
-@sample_blueprint.route('/samples/<int:sample_id>/web_summary_url', methods=['GET'])
+@sample_blueprint.route('/api/samples/<int:sample_id>/web_summary_url', methods=['GET'])
 # Returns a presigned S3 URL for a sample's web summary.
 def get_web_summary_url(sample_id):
     s3 = boto3.client('s3')
