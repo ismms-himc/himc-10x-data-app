@@ -16,20 +16,17 @@ function requireLogIn() {
   console.log('requiring login');
 }
 
-const App = function (props) {
+const App = function () {
   return(
-    <div className='wrap'>
-      <div className='app-nav-and-content-container'>
+    <div>
+      <header>
           <NavigationContainer />
-          { props.children }
-      </div>
-      <div className='app-footer'>
-      {/*  <Footer /> */}
-      </div>
-      <Switch>
+      </header>
         <RedirectLoggedInUserRoute path="/" component={HomeContainer}/>
         <ProtectedRoute path="/samples" component={SampleIndexContainer}/>
-      </Switch>
+      <footer>
+        {/*  <Footer /> */}
+      </footer>
     </div>
   );
 };
