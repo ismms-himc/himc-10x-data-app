@@ -11,7 +11,7 @@ sudo npm install
 sudo yarn start OR sudo npm start
 Note to self: pack.json name: frontend. May need to change later on
 
-2.) Begin filling out SampleFilter and SampleList constants. 
+2.) Begin filling out SampleFilter and SampleList constants.
 
 3.) In App.js, integrate admin on rest and jsonServerRestClient hack
 
@@ -57,7 +57,7 @@ python3 manage.py db migrate
 15.) Add decode auth function and test
 
 
-16.) Get the following working: 
+16.) Get the following working:
 		cd app/api
 		python3 __init__.py
 
@@ -84,9 +84,9 @@ DETOUR:
 22.) Add sample routes and blueprints
 
 23.) Seed db with 3 toy samples via psql command line:
-INSERT INTO samples (sample_id, reference_transcriptome, web_summary_url) VALUES ('ABC', 'hg19', 'https://s3.us-east-2.amazonaws.com/himc-10x-data/web_summary.html');
-INSERT INTO samples (sample_id, reference_transcriptome) VALUES ('DEF', 'GRCh38');
-INSERT INTO samples (sample_id) VALUES ('GHI', 'hg19');
+INSERT INTO samples (sample_id, reference_transcriptome, run_id) VALUES ('ABC', 'hg19', '222');
+INSERT INTO samples (sample_id, reference_transcriptome, run_id) VALUES ('DEF', 'GRCh38', '222_223_pooled');
+INSERT INTO samples (sample_id, reference_transcriptome, run_id) VALUES ('GHI', 'hg19', '223');
 
 
 24.) Add response for /samples API endpoint
