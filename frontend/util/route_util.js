@@ -13,7 +13,7 @@ const Auth = ({ component: Component, path, loggedIn }) => (
   )} />
 );*/}
 
-{/* TODO: use this instead of console.log in else clause: <Redirect to="/login" /> */}
+{/* TODO: use this in else clause: <Redirect to="/login" /> */}
 const Protected = ({ component: Component, path, loggedIn }) => (
   <Route path={path} render={(props) => (
      loggedIn ? (

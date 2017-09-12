@@ -1,4 +1,4 @@
-# contains useful scripts (run, initdb, testing, list routes, etc) using 
+# contains useful scripts (run, initdb, testing, list routes, etc) using
 # Flask-Script
 
 import os
@@ -14,20 +14,14 @@ COV = coverage.coverage(
     omit=[
         'himc-10x-data-app/tests/*',
         'himc-10x-data-app/app/config.py',
-        # TODO: below needed? no equivalent to the jwt-auth line below-- now there is
         'himc-10x-data-app/app/api/__init__.py'
     ]
 )
 COV.start()
 
-# TODO: does below work or will there be an issue because application.py is not __init__.py
-# also not sure if models will work
-# 8/22 update: change application.py to __init__.py
-# TODO: check if we need to import specific model files
-# (ex: from app.api.models import sample, user)
+
 from app import app, db
 from app.api.models import user, sample
-# from project.server import app, db, models
 
 migrate = Migrate(app, db)
 manager = Manager(app)

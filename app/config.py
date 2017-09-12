@@ -1,5 +1,5 @@
-# storing all the module configuration for different environments (local, staging 
-# and prod). You don't want to be messing with production data while developing 
+# storing all the module configuration for different environments (local, staging
+# and prod). You don't want to be messing with production data while developing
 # locally!
 
 
@@ -11,7 +11,6 @@ database_name = 'himc_10x_data_app'
 
 class BaseConfig:
     """Base configuration."""
-    # TODO: change key below??
     # Returns the value of the environment variable if it exists. Otherwise,
     # returns the second argument.
     SECRET_KEY = os.getenv('SECRET_KEY', 'my_precious')
@@ -38,7 +37,6 @@ class TestingConfig(BaseConfig):
 
 class ProductionConfig(BaseConfig):
     """Production configuration."""
-    # TODO: change key below??
     SECRET_KEY = 'my_precious'
     DEBUG = False
     SQLALCHEMY_DATABASE_URI = 'postgresql:///example'

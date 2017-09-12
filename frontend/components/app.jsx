@@ -7,14 +7,7 @@ import HomeContainer from './home/home_container';
 import { ProtectedRoute, RedirectLoggedInUserRoute } from '../util/route_util';
 // import Footer from './footer/footer';
 
-{/*TODO: replace the functions below. For testing purposes only: */}
-function redirectIfLoggedIn() {
-  return <Redirect to="/samples"/>
-}
-
-function requireLogIn() {
-  console.log('requiring login');
-}
+{/*TODO: implement footer */}
 
 const App = function () {
   return(
@@ -36,10 +29,3 @@ const App = function () {
 };
 
 export default App;
-
-{/*<Route path="/" component={ App }/>
-  <IndexRoute component={ HomeContainer } onEnter={redirectIfLoggedIn}/>
-<Route
-  path='/samples'
-  component={ SampleIndexContainer }
-  onEnter={ requireLogIn }/> */}
