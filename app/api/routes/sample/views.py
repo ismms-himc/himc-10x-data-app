@@ -23,7 +23,7 @@ def get_samples():
                             "sample_id": sample.sample_id,
                             "reference_transcriptome": sample.reference_transcriptome,
                             "run_id": sample.run_id })
-                            
+
     response = flask.Response(json.dumps(sample_data))
     response.headers.add('X-Total-Count', len(sample_data))
     response.headers.add('Access-Control-Expose-Headers', 'X-Total-Count')
@@ -41,7 +41,6 @@ def get_web_summary_url(sample_id):
         reference_transcriptome=sample.reference_transcriptome,
         sample_id=sample.sample_id)
 
-    # import pdb; pdb.set_trace()
     web_summary_url = s3.generate_presigned_url(
         ClientMethod='get_object',
         ExpiresIn=3600,
@@ -51,3 +50,24 @@ def get_web_summary_url(sample_id):
         }
     )
     return flask.Response(json.dumps({"web_summary_url": web_summary_url}))
+
+
+@sample_blueprint.route('/api/samples/<int:sample_id>/fastqs', methods=['GET'])
+# Returns a presigned S3 URL for a sample's web summary.
+def get_fastqs_url(sample_id):
+    s3 = boto3.client('s3')
+    sample = Sample.query.get(sample_id)
+
+    key = '{run_id}/{reference_transcriptome}/fastqs/fastqs.tar.gz'.format(
+        run_id=sample.run_id,
+        reference_transcriptome=sample.reference_transcriptome)
+
+    fastqs_url = s3.generate_presigned_url(
+        ClientMethod='get_object',
+        ExpiresIn=3600,
+        Params={
+            'Bucket': SAMPLE_BUCKET_NAME,
+            'Key': key
+        }
+    )
+    return flask.Response(json.dumps({"fastqs_url": fastqs_url}))
