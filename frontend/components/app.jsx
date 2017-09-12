@@ -22,8 +22,12 @@ const App = function () {
       <header>
           <NavigationContainer />
       </header>
-        <RedirectLoggedInUserRoute path="/" component={HomeContainer}/>
-        <ProtectedRoute path="/samples" component={SampleIndexContainer}/>
+      <main>
+        <Switch>
+          <RedirectLoggedInUserRoute exact path="/" component={HomeContainer}/>
+          <ProtectedRoute exact path="/samples" component={SampleIndexContainer}/>
+        </Switch>
+      </main>
       <footer>
         {/*  <Footer /> */}
       </footer>
