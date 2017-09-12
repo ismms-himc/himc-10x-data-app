@@ -136,21 +136,24 @@ export default class SampleIndex extends React.Component {
   }
 
   addViewWebSummaryButton(sample) {
-    const viewWebSummaryButton = <button type="submit" onClick={() => this.viewWebSummary(sample['id'])}>View Web Summary</button>;
+    const viewWebSummaryButton = <button type="submit"
+                                  onClick={() => this.viewWebSummary(sample['id'])}>View Web Summary</button>;
     const sampleClone = cloneDeep(sample);
     sampleClone['viewWebSummaryButton'] = viewWebSummaryButton;
     return sampleClone;
   }
 
   addDownloadFastqsButton(sample) {
-    const downloadFastqsButton = <button type="submit" onClick={() => this.downloadFastqs(sample['id'])}>Download Run FASTQs</button>;
+    const downloadFastqsButton = <button type="submit"
+                                  onClick={() => this.downloadFastqs(sample['id'])}>Download Run FASTQs</button>;
     const sampleClone = cloneDeep(sample);
     sampleClone['downloadFastqsButton'] = downloadFastqsButton;
     return sampleClone;
   }
 
   addDownloadGeneBcMatricesButton(sample){
-    const downloadGeneBcMatricesButton = <button type="submit" onClick={() => this.downloadGeneBcMatrices(sample['id'])}>Download Matrices</button>;
+    const downloadGeneBcMatricesButton = <button type="submit"
+                                            onClick={() => this.downloadGeneBcMatrices(sample['id'])}>Download Matrices</button>;
     const sampleClone = cloneDeep(sample);
     sampleClone['downloadGeneBcMatricesButton'] = downloadGeneBcMatricesButton;
     return sampleClone;

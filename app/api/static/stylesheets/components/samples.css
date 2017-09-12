@@ -7,3 +7,7 @@
   font-family: 'Helvetica', sans-serif;
   font-size: 30px;
 }
+
+.samples-index div.table-responsive > table > thead > tr:nth-child(2) > th:nth-child(-n+3) {
+  display: none;
+}
