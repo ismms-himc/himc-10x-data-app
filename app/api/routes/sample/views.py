@@ -71,3 +71,24 @@ def get_fastqs_url(sample_id):
         }
     )
     return flask.Response(json.dumps({"fastqs_url": fastqs_url}))
+
+@sample_blueprint.route('/api/samples/<int:sample_id>/gene_bc_matrices', methods=['GET'])
+# Returns a presigned S3 URL for a sample's web summary.
+def get_gene_bc_matrices_url(sample_id):
+    s3 = boto3.client('s3')
+    sample = Sample.query.get(sample_id)
+
+    key = '{run_id}/{reference_transcriptome}/{sample_id}/gene_bc_matrices/gene_bc_matrices.tar.gz'.format(
+        run_id=sample.run_id,
+        reference_transcriptome=sample.reference_transcriptome,
+        sample_id=sample.sample_id)
+
+    gene_bc_matrices_url = s3.generate_presigned_url(
+        ClientMethod='get_object',
+        ExpiresIn=3600,
+        Params={
+            'Bucket': SAMPLE_BUCKET_NAME,
+            'Key': key
+        }
+    )
+    return flask.Response(json.dumps({"gene_bc_matrices_url": gene_bc_matrices_url}))

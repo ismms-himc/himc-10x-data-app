@@ -22,14 +22,24 @@ export default class SampleIndex extends React.Component {
         { name: 'sample_id', title: 'Sample ID'},
         { name: 'run_id', title: 'Run ID'},
         { name: 'reference_transcriptome', title: 'Reference Transcriptome' },
-        { name: 'viewWebSummaryButton', title: 'Web Summary'}
+        { name: 'viewWebSummaryButton', title: 'Web Summary'},
+        { name: 'downloadFastqsButton', title: 'FASTQs'},
+        { name: 'downloadGeneBcMatricesButton', title: 'Gene BC Matrices'}
       ],
       allowedPageSizes: [5, 10, 15],
     };
 
-    this.viewWebSummary = this.viewWebSummary.bind(this)
-    this.addViewWebSummaryButton = this.addViewWebSummaryButton.bind(this)
-    this.fetchWebSummaryUrl = this.fetchWebSummaryUrl.bind(this)
+    this.viewWebSummary = this.viewWebSummary.bind(this);
+    this.addViewWebSummaryButton = this.addViewWebSummaryButton.bind(this);
+    this.fetchWebSummaryUrl = this.fetchWebSummaryUrl.bind(this);
+
+    this.addDownloadFastqsButton = this.addDownloadFastqsButton.bind(this);
+    this.downloadFastqs = this.downloadFastqs.bind(this);
+    this.fetchFastqsUrl = this.fetchFastqsUrl.bind(this);
+
+    this.addDownloadGeneBcMatricesButton = this.addDownloadGeneBcMatricesButton.bind(this);
+    this.downloadGeneBcMatrices = this.downloadGeneBcMatrices.bind(this);
+    this.fetchGeneBcMatricesUrl = this.fetchGeneBcMatricesUrl.bind(this);
   }
 
   componentDidMount() {
@@ -43,7 +53,43 @@ export default class SampleIndex extends React.Component {
     })
     .done(function (data, textStatus, response) {
       data = JSON.parse(data);
-      window.open(data['web_summary_url'])
+      window.open(data['web_summary_url']);
+    })
+    .fail(function (response, textStatus, errorThrown) {
+      {/*
+        TODO: handle failures better
+        */}
+      alert('request failed')
+    });
+  }
+
+  fetchFastqsUrl(sampleId) {
+    $.ajax({
+      method: 'GET',
+      url: `/api/samples/${sampleId}/fastqs`
+    })
+    .done(function (data, textStatus, response) {
+      console.log('fetching fastqs');
+      data = JSON.parse(data);
+      window.open(data['fastqs_url']);
+    })
+    .fail(function (response, textStatus, errorThrown) {
+      {/*
+        TODO: handle failures better
+        */}
+      alert('request failed')
+    });
+  }
+
+  fetchGeneBcMatricesUrl(sampleId) {
+    $.ajax({
+      method: 'GET',
+      url: `/api/samples/${sampleId}/gene_bc_matrices`
+    })
+    .done(function (data, textStatus, response) {
+      console.log('fetching gene bc matrices');
+      data = JSON.parse(data);
+      window.open(data['gene_bc_matrices_url']);
     })
     .fail(function (response, textStatus, errorThrown) {
       {/*
@@ -65,10 +111,48 @@ export default class SampleIndex extends React.Component {
     this.fetchWebSummaryUrl(sampleId)
   }
 
+  downloadFastqs(sampleId) {
+    {/* TODO:
+      disable download button?
+      put up the loading modal
+      make request to backend - done
+      take down loading modal
+      open the presigned URL - done
+      */}
+
+    this.fetchFastqsUrl(sampleId)
+  }
+
+  downloadGeneBcMatrices(sampleId) {
+    {/* TODO:
+      disable download button?
+      put up the loading modal
+      make request to backend - done
+      take down loading modal
+      open the presigned URL - done
+      */}
+
+    this.fetchGeneBcMatricesUrl(sampleId);
+  }
+
   addViewWebSummaryButton(sample) {
     const viewWebSummaryButton = <button type="submit" onClick={() => this.viewWebSummary(sample['id'])}>View Web Summary</button>;
     const sampleClone = cloneDeep(sample);
     sampleClone['viewWebSummaryButton'] = viewWebSummaryButton;
+    return sampleClone;
+  }
+
+  addDownloadFastqsButton(sample) {
+    const downloadFastqsButton = <button type="submit" onClick={() => this.downloadFastqs(sample['id'])}>Download Run FASTQs</button>;
+    const sampleClone = cloneDeep(sample);
+    sampleClone['downloadFastqsButton'] = downloadFastqsButton;
+    return sampleClone;
+  }
+
+  addDownloadGeneBcMatricesButton(sample){
+    const downloadGeneBcMatricesButton = <button type="submit" onClick={() => this.downloadGeneBcMatrices(sample['id'])}>Download Matrices</button>;
+    const sampleClone = cloneDeep(sample);
+    sampleClone['downloadGeneBcMatricesButton'] = downloadGeneBcMatricesButton;
     return sampleClone;
   }
 
@@ -81,13 +165,17 @@ export default class SampleIndex extends React.Component {
       return <LoadingIcon />;
     } else {
 
-      const samplesWithViewWebSummaryButton = samples.map(this.addViewWebSummaryButton)
+      const samplesWithViewWebSummaryButton = samples.map(this.addViewWebSummaryButton);
+      const samplesWithDownloadFastqsButton = samplesWithViewWebSummaryButton.map(this.addDownloadFastqsButton);
+      {/* The const below represents samples with buttons for viewing web summaries,
+        downloading fastws, and downloading gene bc matrices */}
+      const samplesWithDownloadGeneBcMatricesButton = samplesWithDownloadFastqsButton.map(this.addDownloadGeneBcMatricesButton);
 
       return (
         <div className='samples-index'>
           <h2>Samples</h2>
           <Grid
-            rows={samplesWithViewWebSummaryButton}
+            rows={samplesWithDownloadGeneBcMatricesButton}
             columns={columns}>
             <ColumnOrderState defaultOrder={columns.map(column => column.name)} />
 
@@ -112,9 +200,7 @@ export default class SampleIndex extends React.Component {
 
             <DragDropContext />
 
-            <TableView
-              allowColumnReordering
-            />
+            <TableView />
 
             <TableHeaderRow allowSorting allowDragging />
             <TableFilterRow />
