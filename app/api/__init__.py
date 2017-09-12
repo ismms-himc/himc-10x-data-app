@@ -1,5 +1,4 @@
 # main entry point of application
-
 import os
 # import sys
 # import json
@@ -16,7 +15,7 @@ from flask_wtf.csrf import CSRFProtect
 # from flask.ext.cors import cross_origin
 
 # TODO: needed?
-# Default config vals 
+# Default config vals
 # THEME = 'default' if os.environ.get('THEME') is None else os.environ.get('THEME')
 # FLASK_DEBUG = 'false' if os.environ.get('FLASK_DEBUG') is None else os.environ.get('FLASK_DEBUG')
 
@@ -66,3 +65,13 @@ app.register_blueprint(home_page_blueprint)
 
 from app.api.routes.sample.views import sample_blueprint
 app.register_blueprint(sample_blueprint)
+
+from flask import render_template
+
+# We add the catch all route last so that our API routes have precedence. This
+# catch-all route helps fix the routing bug. Users can now refresh while on /samples
+# without getting a 404.
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def catch_all(path):
+    return render_template('index.html')
