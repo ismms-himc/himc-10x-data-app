@@ -5,7 +5,7 @@ import { Route, Switch } from 'react-router-dom';
 import { Redirect } from 'react-router';
 import HomeContainer from './home/home_container';
 import { ProtectedRoute, RedirectLoggedInUserRoute } from '../util/route_util';
-// import Footer from './footer/footer';
+import Footer from './footer/footer';
 
 {/*TODO: implement footer */}
 
@@ -22,7 +22,7 @@ const App = function () {
         </Switch>
       </main>
       <footer>
-        {/*  <Footer /> */}
+        {/*<Footer />*/}
       </footer>
     </div>
   );
