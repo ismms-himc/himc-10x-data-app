@@ -1,6 +1,7 @@
 const path = require('path');
 module.exports = {
   context: __dirname,
+  devtool: "source-map",
   entry: './frontend/himc_10x_data_app.jsx',
   output: {
     path: path.resolve(__dirname, 'app', 'api', 'static', 'javascripts'),
