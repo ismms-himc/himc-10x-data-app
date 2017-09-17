@@ -23,4 +23,5 @@ app/api/frontend/yarn-error.log*
 # front-end related
 node_modules
 bundle.js
-bundle.js.map
+bundle.js.mapenv/pip-selfcheck.json
+env/pyvenv.cfg
