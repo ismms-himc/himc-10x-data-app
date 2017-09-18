@@ -1,15 +1,14 @@
 import React from 'react';
 import LoadingIcon from '../../loading/loading_icon';
-import {
-  SortingState, SelectionState, FilteringState, PagingState, GroupingState,
-  LocalFiltering, LocalGrouping, LocalPaging, LocalSorting,
-  ColumnOrderState,
-} from '@devexpress/dx-react-grid';
-import {
-  Grid,
-  TableView, TableHeaderRow, TableFilterRow, TableSelection, TableGroupRow,
-  PagingPanel, GroupingPanel, DragDropContext,
-} from '@devexpress/dx-react-grid-bootstrap3';
+import ReactDataGrid from 'react-data-grid';
+{/*
+  there's a warning that's raised when importing this package.
+  see https://github.com/adazzle/react-data-grid/issues/858
+*/}
+import { Toolbar, Data } from 'react-data-grid-addons';
+
+const Selectors = Data.Selectors;
+
 import { cloneDeep } from 'lodash';
 import $ from 'jquery';
 
@@ -19,14 +18,13 @@ export default class SampleIndex extends React.Component {
 
     this.state = {
       columns: [
-        { name: 'sample_id', title: 'Sample ID'},
-        { name: 'run_id', title: 'Run ID'},
-        { name: 'reference_transcriptome', title: 'Reference Transcriptome' },
-        { name: 'viewWebSummaryButton', title: 'Web Summary', allowFiltering: false, allowSearch: false, allowSorting: false },
-        { name: 'downloadFastqsButton', title: 'FASTQs'},
-        { name: 'downloadGeneBcMatricesButton', title: 'Gene BC Matrices'}
-      ],
-      allowedPageSizes: [5, 10, 15],
+        { key: 'sample_id', name: 'Sample ID', sortable: true, filterable: true },
+        { key: 'run_id', name: 'Run ID', sortable: true, filterable: true },
+        { key: 'reference_transcriptome', name: 'Reference Transcriptome', sortable: true, filterable: true },
+        { key: 'viewWebSummaryButton', name: 'Web Summary' },
+        { key: 'downloadFastqsButton', name: 'FASTQs'},
+        { key: 'downloadGeneBcMatricesButton', name: 'Gene BC Matrices'}
+      ]
     };
 
     this.viewWebSummary = this.viewWebSummary.bind(this);
@@ -40,6 +38,10 @@ export default class SampleIndex extends React.Component {
     this.addDownloadGeneBcMatricesButton = this.addDownloadGeneBcMatricesButton.bind(this);
     this.downloadGeneBcMatrices = this.downloadGeneBcMatrices.bind(this);
     this.fetchGeneBcMatricesUrl = this.fetchGeneBcMatricesUrl.bind(this);
+
+    this.rowGetter = this.rowGetter.bind(this);
+    this.getRows = this.getRows.bind(this);
+    this.getSize = this.getSize.bind(this);
   }
 
   componentDidMount() {
@@ -94,50 +96,42 @@ export default class SampleIndex extends React.Component {
     this.fetchGeneBcMatricesUrl(sampleId);
   }
 
+  getRows() {
+    var rows = this.props.samples || [];
+    return rows
+  }
+
+  getSize() {
+    return this.getRows().length;
+  }
+
+  rowGetter(rowIdx) {
+    const rows = this.getRows();
+    return rows[rowIdx];
+  }
+
   fetchFastqsUrl(sampleId) {
-    $.ajax({
-      method: 'GET',
-      url: `/api/samples/${sampleId}/fastqs`
-    })
-    .done(function (data, textStatus, response) {
-      console.log('fetching fastqs');
-      data = JSON.parse(data);
-      window.open(data['fastqs_url']);
-    })
-    .fail(function (response, textStatus, errorThrown) {
-      {/*
-        TODO: handle failures better
-        */}
-      alert('request failed')
-    });
+    fetchPresignedUrl('fastqs_url', sampleId)
   }
 
   fetchGeneBcMatricesUrl(sampleId) {
-    $.ajax({
-      method: 'GET',
-      url: `/api/samples/${sampleId}/gene_bc_matrices`
-    })
-    .done(function (data, textStatus, response) {
-      console.log('fetching gene bc matrices');
-      data = JSON.parse(data);
-      window.open(data['gene_bc_matrices_url']);
-    })
-    .fail(function (response, textStatus, errorThrown) {
-      {/*
-        TODO: handle failures better
-        */}
-      alert('request failed')
-    });
+    fetchPresignedUrl('gene_bc_matrices_url', sampleId)
   }
 
   fetchWebSummaryUrl(sampleId) {
+    fetchPresignedUrl('web_summary_url', sampleId)
+  }
+
+  fetchPresignedUrl(resourceType, sampleId) {
+    console.log(`fetching ${resourceType}`);
+
     $.ajax({
       method: 'GET',
-      url: `/api/samples/${sampleId}/web_summary_url`
+      url: `/api/samples/${sampleId}/${resourceType}`
     })
     .done(function (data, textStatus, response) {
       data = JSON.parse(data);
-      window.open(data['web_summary_url']);
+      window.open(data[resource_type]);
     })
     .fail(function (response, textStatus, errorThrown) {
       {/*
@@ -159,59 +153,45 @@ export default class SampleIndex extends React.Component {
     this.fetchWebSummaryUrl(sampleId)
   }
 
+  handleGridSort(sortColumn, sortDirection) {
+  {/*
+    TODO: flex out this function
+    */}
+    console.log('sortColumn:');
+    console.log(sortColumn);
+    console.log('sortDirection:');
+    console.log(sortDirection);
+    this.setState({ sortColumn: sortColumn, sortDirection: sortDirection });
+  }
+
   render() {
     const { samples, loading } = this.props;
-
     const { columns, allowedPageSizes } = this.state;
 
     if (loading) {
       return <LoadingIcon />;
     } else {
 
-      const samplesWithViewWebSummaryButton = samples.map(this.addViewWebSummaryButton);
-      const samplesWithDownloadFastqsButton = samplesWithViewWebSummaryButton.map(this.addDownloadFastqsButton);
-      {/* The const below represents samples with buttons for viewing web summaries,
-        downloading fastws, and downloading gene bc matrices */}
-      const samplesWithDownloadGeneBcMatricesButton = samplesWithDownloadFastqsButton.map(this.addDownloadGeneBcMatricesButton);
+      {/*
+        const samplesWithViewWebSummaryButton = samples.map(this.addViewWebSummaryButton);
+        const samplesWithDownloadFastqsButton = samplesWithViewWebSummaryButton.map(this.addDownloadFastqsButton);
+        The const below represents samples with buttons for viewing web summaries,
+        downloading fastws, and downloading gene bc matrices
+        const samplesWithDownloadGeneBcMatricesButton = samplesWithDownloadFastqsButton.map(this.addDownloadGeneBcMatricesButton);
+         */}
 
       return (
         <div className='samples-index'>
-          <h2>Samples</h2>
-          <Grid
-            rows={samplesWithDownloadGeneBcMatricesButton}
-            columns={columns}>
-            <ColumnOrderState defaultOrder={columns.map(column => column.name)} />
-
-            <FilteringState/>
-            <SortingState
-              defaultSorting={[
-                { columnName: 'sample_id', direction: 'asc' },
-              ]}
-            />
-            <PagingState
-              defaultCurrentPage={0}
-              defaultPageSize={10}
-            />
-
-            <LocalFiltering />
-            <LocalSorting />
-            <LocalPaging />
-
-            <SelectionState
-              defaultSelection={[1, 3, 18]}
-            />
-
-            <DragDropContext />
-
-            <TableView />
-
-            <TableHeaderRow allowSorting allowDragging />
-            <TableFilterRow />
-            <PagingPanel
-              allowedPageSizes={allowedPageSizes}
-            />
-
-          </Grid>
+          <ReactDataGrid
+            onGridSort={this.handleGridSort}
+            enableCellSelect={true}
+            columns={columns}
+            rowGetter={this.rowGetter}
+            rowsCount={this.getSize()}
+            minHeight={500}
+            toolbar={<Toolbar enableFilter={true}/>}
+            onAddFilter={this.handleFilterChange}
+            onClearFilters={this.onClearFilters} />
         </div>
       );
     }
