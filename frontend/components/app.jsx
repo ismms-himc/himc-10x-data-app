@@ -22,7 +22,7 @@ const App = function () {
         </Switch>
       </main>
       <footer>
-        {/*<Footer />*/}
+        <Footer />
       </footer>
     </div>
   );
