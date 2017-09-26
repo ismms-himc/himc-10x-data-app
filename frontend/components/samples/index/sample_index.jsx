@@ -42,6 +42,8 @@ export default class SampleIndex extends React.Component {
     this.rowGetter = this.rowGetter.bind(this);
     this.getRows = this.getRows.bind(this);
     this.getSize = this.getSize.bind(this);
+
+    this.fetchPresignedUrl = this.fetchPresignedUrl.bind(this);
   }
 
   componentDidMount() {
@@ -96,9 +98,64 @@ export default class SampleIndex extends React.Component {
     this.fetchGeneBcMatricesUrl(sampleId);
   }
 
+  fetchFastqsUrl(sampleId) {
+    this.fetchPresignedUrl('fastqs_url', sampleId)
+  }
+
+  fetchGeneBcMatricesUrl(sampleId) {
+    this.fetchPresignedUrl('gene_bc_matrices_url', sampleId)
+  }
+
+  fetchWebSummaryUrl(sampleId) {
+    this.fetchPresignedUrl('web_summary_url', sampleId)
+  }
+
+  fetchPresignedUrl(resourceType, sampleId) {
+    {/* Note, use of snake-case resourceType arguments below is due to the fact that
+      the backend routes are named with snake-case (Python convention) instead
+      of camel-case (JavaScript) convention */}
+    console.log(`fetching ${resourceType}`);
+    $.ajax({
+      method: 'GET',
+      url: `/api/samples/${sampleId}/${resourceType}`
+    })
+    .fail(function (response, textStatus, errorThrown) {
+      console.log('ajax fail:');
+      console.log(response);
+      {/*
+        TODO: handle failures better; also handle when fastqs not yet uploaded to
+        S3 bucket. AJAX request response will be 200 OK even if resource doesn't
+        exist at the URL. A new tab with and Error Code 'NoSuchKey' will open.
+
+        In addition, handle when gene_bc_matrices not yet uploaded to S3 bucket.
+        App crashes when you click 'Download Matrices' and there are none to download.
+        */}
+      alert('request failed')
+    })
+    .done(function (data, textStatus, response) {
+      console.log('ajax done');
+      console.log(response);
+      console.log(data);
+      data = JSON.parse(data);
+        window.open(data[resourceType]);
+
+    });
+  }
+
   getRows() {
     var rows = this.props.samples || [];
-    return rows
+    console.log('rows inside getRows');
+    console.log(rows);
+    if (rows.length > 0) {
+      const rowsWithViewWebSummaryButton = rows.map(this.addViewWebSummaryButton);
+      const rowsWithDownloadFastqsButton = rowsWithViewWebSummaryButton.map(this.addDownloadFastqsButton);
+      const rowsWithDownloadGeneBcMatricesButton = rowsWithDownloadFastqsButton.map(this.addDownloadGeneBcMatricesButton);
+      console.log('inside getRows');
+      console.log(rowsWithDownloadGeneBcMatricesButton);
+      return rowsWithDownloadGeneBcMatricesButton;
+    } else {
+      return rows;
+    }
   }
 
   getSize() {
@@ -110,36 +167,7 @@ export default class SampleIndex extends React.Component {
     return rows[rowIdx];
   }
 
-  fetchFastqsUrl(sampleId) {
-    fetchPresignedUrl('fastqs_url', sampleId)
-  }
 
-  fetchGeneBcMatricesUrl(sampleId) {
-    fetchPresignedUrl('gene_bc_matrices_url', sampleId)
-  }
-
-  fetchWebSummaryUrl(sampleId) {
-    fetchPresignedUrl('web_summary_url', sampleId)
-  }
-
-  fetchPresignedUrl(resourceType, sampleId) {
-    console.log(`fetching ${resourceType}`);
-
-    $.ajax({
-      method: 'GET',
-      url: `/api/samples/${sampleId}/${resourceType}`
-    })
-    .done(function (data, textStatus, response) {
-      data = JSON.parse(data);
-      window.open(data[resource_type]);
-    })
-    .fail(function (response, textStatus, errorThrown) {
-      {/*
-        TODO: handle failures better
-        */}
-      alert('request failed')
-    });
-  }
 
   viewWebSummary(sampleId) {
     {/* TODO:
@@ -155,7 +183,7 @@ export default class SampleIndex extends React.Component {
 
   handleGridSort(sortColumn, sortDirection) {
   {/*
-    TODO: flex out this function
+    TODO: flesh out this function
     */}
     console.log('sortColumn:');
     console.log(sortColumn);
@@ -179,8 +207,8 @@ export default class SampleIndex extends React.Component {
         downloading fastws, and downloading gene bc matrices
         const samplesWithDownloadGeneBcMatricesButton = samplesWithDownloadFastqsButton.map(this.addDownloadGeneBcMatricesButton);
          */}
+         return (
 
-      return (
         <div className='samples-index'>
           <ReactDataGrid
             onGridSort={this.handleGridSort}
