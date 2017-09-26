@@ -2,13 +2,10 @@ import flask
 from flask import request, Blueprint
 from app.api.models.sample import Sample
 import json
-
 import boto3
-
 import os
 
 SAMPLE_BUCKET_NAME = 'himc-10x-data'
-
 sample_blueprint = Blueprint('sample_pages', __name__)
 
 @sample_blueprint.route('/api/samples', methods=['GET'])
@@ -52,7 +49,7 @@ def get_web_summary_url(sample_id):
     return flask.Response(json.dumps({"web_summary_url": web_summary_url}))
 
 
-@sample_blueprint.route('/api/samples/<int:sample_id>/fastqs', methods=['GET'])
+@sample_blueprint.route('/api/samples/<int:sample_id>/fastqs_url', methods=['GET'])
 # Returns a presigned S3 URL for a sample's web summary.
 def get_fastqs_url(sample_id):
     s3 = boto3.client('s3')
@@ -72,12 +69,12 @@ def get_fastqs_url(sample_id):
     )
     return flask.Response(json.dumps({"fastqs_url": fastqs_url}))
 
-@sample_blueprint.route('/api/samples/<int:sample_id>/gene_bc_matrices', methods=['GET'])
+@sample_blueprint.route('/api/samples/<int:sample_id>/gene_bc_matrices_url', methods=['GET'])
 # Returns a presigned S3 URL for a sample's web summary.
 def get_gene_bc_matrices_url(sample_id):
     s3 = boto3.client('s3')
     sample = Sample.query.get(sample_id)
-
+    
     key = '{run_id}/{reference_transcriptome}/{sample_id}/gene_bc_matrices/gene_bc_matrices.tar.gz'.format(
         run_id=sample.run_id,
         reference_transcriptome=sample.reference_transcriptome,
