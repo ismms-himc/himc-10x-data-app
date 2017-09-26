@@ -24,7 +24,10 @@ export default class SampleIndex extends React.Component {
         { key: 'viewWebSummaryButton', name: 'Web Summary' },
         { key: 'downloadFastqsButton', name: 'FASTQs'},
         { key: 'downloadGeneBcMatricesButton', name: 'Gene BC Matrices'}
-      ]
+      ],
+      sortColumn: null,
+      sortDirection: null,
+      filters: {}
     };
 
     this.viewWebSummary = this.viewWebSummary.bind(this);
@@ -44,10 +47,21 @@ export default class SampleIndex extends React.Component {
     this.getSize = this.getSize.bind(this);
 
     this.fetchPresignedUrl = this.fetchPresignedUrl.bind(this);
+    this.handleGridSort = this.handleGridSort.bind(this);
+    this.handleFilterChange = this.handleFilterChange.bind(this);
+    this.onClearFilters = this.onClearFilters.bind(this);
   }
 
   componentDidMount() {
+    console.log('component is mounting');
     this.props.requestSamples();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log('componentWillReceiveProps');
+    console.log(this.props);
+    console.log(nextProps);
+    console.log(this.props == nextProps);
   }
 
   addDownloadFastqsButton(sample) {
@@ -149,6 +163,33 @@ export default class SampleIndex extends React.Component {
     return this.getRows().length;
   }
 
+  handleFilterChange(filter) {
+    console.log('handling filter change');
+    console.log(filter);
+    let newFilters = Object.assign({}, this.state.filters);
+    if (filter.filterTerm) {
+      newFilters[filter.column.key] = filter;
+    } else {
+      delete newFilters[filter.column.key];
+    }
+    console.log('before setState');
+    {/*this.setState({ filters: newFilters });*/}
+  }
+
+  handleGridSort(sortColumn, sortDirection) {
+    console.log('handling grid sort');
+    console.log(sortColumn);
+    console.log(sortDirection);
+    console.log(this);
+    {/*  TODO: flesh out this function */}
+    this.setState({ sortColumn: sortColumn, sortDirection: sortDirection });
+  }
+
+  onClearFilters() {
+    console.log('clearing filters');
+    this.setState({ filters: {} });
+  }
+
   rowGetter(rowIdx) {
     const rows = this.getRows();
     return rows[rowIdx];
@@ -163,13 +204,6 @@ export default class SampleIndex extends React.Component {
       open the presigned URL - done
       */}
     this.fetchWebSummaryUrl(sampleId)
-  }
-
-  handleGridSort(sortColumn, sortDirection) {
-  {/*
-    TODO: flesh out this function
-    */}
-    this.setState({ sortColumn: sortColumn, sortDirection: sortDirection });
   }
 
   render() {
