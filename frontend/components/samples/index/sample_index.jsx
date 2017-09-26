@@ -82,7 +82,6 @@ export default class SampleIndex extends React.Component {
       take down loading modal
       open the presigned URL - done
       */}
-
     this.fetchFastqsUrl(sampleId)
   }
 
@@ -94,7 +93,6 @@ export default class SampleIndex extends React.Component {
       take down loading modal
       open the presigned URL - done
       */}
-
     this.fetchGeneBcMatricesUrl(sampleId);
   }
 
@@ -114,14 +112,11 @@ export default class SampleIndex extends React.Component {
     {/* Note, use of snake-case resourceType arguments below is due to the fact that
       the backend routes are named with snake-case (Python convention) instead
       of camel-case (JavaScript) convention */}
-    console.log(`fetching ${resourceType}`);
     $.ajax({
       method: 'GET',
       url: `/api/samples/${sampleId}/${resourceType}`
     })
     .fail(function (response, textStatus, errorThrown) {
-      console.log('ajax fail:');
-      console.log(response);
       {/*
         TODO: handle failures better; also handle when fastqs not yet uploaded to
         S3 bucket. AJAX request response will be 200 OK even if resource doesn't
@@ -133,25 +128,17 @@ export default class SampleIndex extends React.Component {
       alert('request failed')
     })
     .done(function (data, textStatus, response) {
-      console.log('ajax done');
-      console.log(response);
-      console.log(data);
       data = JSON.parse(data);
         window.open(data[resourceType]);
-
     });
   }
 
   getRows() {
     var rows = this.props.samples || [];
-    console.log('rows inside getRows');
-    console.log(rows);
     if (rows.length > 0) {
       const rowsWithViewWebSummaryButton = rows.map(this.addViewWebSummaryButton);
       const rowsWithDownloadFastqsButton = rowsWithViewWebSummaryButton.map(this.addDownloadFastqsButton);
       const rowsWithDownloadGeneBcMatricesButton = rowsWithDownloadFastqsButton.map(this.addDownloadGeneBcMatricesButton);
-      console.log('inside getRows');
-      console.log(rowsWithDownloadGeneBcMatricesButton);
       return rowsWithDownloadGeneBcMatricesButton;
     } else {
       return rows;
@@ -167,8 +154,6 @@ export default class SampleIndex extends React.Component {
     return rows[rowIdx];
   }
 
-
-
   viewWebSummary(sampleId) {
     {/* TODO:
       disable download button?
@@ -177,7 +162,6 @@ export default class SampleIndex extends React.Component {
       take down loading modal
       open the presigned URL - done
       */}
-
     this.fetchWebSummaryUrl(sampleId)
   }
 
@@ -185,10 +169,6 @@ export default class SampleIndex extends React.Component {
   {/*
     TODO: flesh out this function
     */}
-    console.log('sortColumn:');
-    console.log(sortColumn);
-    console.log('sortDirection:');
-    console.log(sortDirection);
     this.setState({ sortColumn: sortColumn, sortDirection: sortDirection });
   }
 
@@ -199,16 +179,7 @@ export default class SampleIndex extends React.Component {
     if (loading) {
       return <LoadingIcon />;
     } else {
-
-      {/*
-        const samplesWithViewWebSummaryButton = samples.map(this.addViewWebSummaryButton);
-        const samplesWithDownloadFastqsButton = samplesWithViewWebSummaryButton.map(this.addDownloadFastqsButton);
-        The const below represents samples with buttons for viewing web summaries,
-        downloading fastws, and downloading gene bc matrices
-        const samplesWithDownloadGeneBcMatricesButton = samplesWithDownloadFastqsButton.map(this.addDownloadGeneBcMatricesButton);
-         */}
-         return (
-
+      return (
         <div className='samples-index'>
           <ReactDataGrid
             onGridSort={this.handleGridSort}
