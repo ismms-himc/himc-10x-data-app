@@ -1,22 +1,39 @@
 import React from 'react';
 import LoadingIcon from '../../loading/loading_icon';
-import ReactDataGrid from 'react-data-grid';
+import Griddle, { plugins, RowDefinition, ColumnDefinition } from 'griddle-react';
 {/*
   there's a warning that's raised when importing this package.
   see https://github.com/adazzle/react-data-grid/issues/858
 */}
 import { Toolbar, Data } from 'react-data-grid-addons';
-
 const Selectors = Data.Selectors;
-
 import { cloneDeep } from 'lodash';
 import $ from 'jquery';
+import { connect } from 'react-redux';
+
+
+const rowDataSelector = (state, { griddleKey }) => {
+  return state
+    .get('data')
+    .find(rowMap => rowMap.get('griddleKey') === griddleKey)
+    .toJSON();
+};
+
+const enhancedWithRowData = connect((state, props) => {
+  return {
+    // rowData will be available into MyCustomComponent
+    rowData: rowDataSelector(state, props)
+  };
+});
+
+
+
 
 export default class SampleIndex extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
+    {/*this.state = {
       columns: [
         { key: 'sample_id', name: 'Sample ID', sortable: true, filterable: true },
         { key: 'run_id', name: 'Run ID', sortable: true, filterable: true },
@@ -28,9 +45,10 @@ export default class SampleIndex extends React.Component {
       sortColumn: null,
       sortDirection: null,
       filters: {}
-    };
+    };*/}
 
     this.viewWebSummary = this.viewWebSummary.bind(this);
+    this.viewWebSummaryButton = this.viewWebSummaryButton.bind(this);
     this.addViewWebSummaryButton = this.addViewWebSummaryButton.bind(this);
     this.fetchWebSummaryUrl = this.fetchWebSummaryUrl.bind(this);
 
@@ -42,14 +60,8 @@ export default class SampleIndex extends React.Component {
     this.downloadGeneBcMatrices = this.downloadGeneBcMatrices.bind(this);
     this.fetchGeneBcMatricesUrl = this.fetchGeneBcMatricesUrl.bind(this);
 
-    this.rowGetter = this.rowGetter.bind(this);
-    this.getRows = this.getRows.bind(this);
-    this.getSize = this.getSize.bind(this);
-
     this.fetchPresignedUrl = this.fetchPresignedUrl.bind(this);
-    this.handleGridSort = this.handleGridSort.bind(this);
-    this.handleFilterChange = this.handleFilterChange.bind(this);
-    this.onClearFilters = this.onClearFilters.bind(this);
+    this.addDownloadButtons = this.addDownloadButtons.bind(this);
   }
 
   componentDidMount() {
@@ -62,6 +74,18 @@ export default class SampleIndex extends React.Component {
     console.log(this.props);
     console.log(nextProps);
     console.log(this.props == nextProps);
+  }
+
+  addDownloadButtons(sample) {
+    {/*TODO: Do we even need to clone the sample here? */}
+    const sampleClone = cloneDeep(sample);
+    console.log("THIS:");
+    console.log(this);
+    const sampleWithWebSummaryButton = this.addViewWebSummaryButton(sampleClone);
+    {/*const sampleWithWebSummaryFastqsAndMatricesButtons = this.addDownloadGeneBcMatricesButton(sampleWithWebSummaryAndFastqsButton);
+    const sampleWithWebSummaryAndFastqsButton = this.addDownloadFastqsButton(sampleWithWebSummaryButton);*/}
+
+    return sampleWithWebSummaryButton;
   }
 
   addDownloadFastqsButton(sample) {
@@ -147,54 +171,6 @@ export default class SampleIndex extends React.Component {
     });
   }
 
-  getRows() {
-    var rows = this.props.samples || [];
-    if (rows.length > 0) {
-      const rowsWithViewWebSummaryButton = rows.map(this.addViewWebSummaryButton);
-      const rowsWithDownloadFastqsButton = rowsWithViewWebSummaryButton.map(this.addDownloadFastqsButton);
-      const rowsWithDownloadGeneBcMatricesButton = rowsWithDownloadFastqsButton.map(this.addDownloadGeneBcMatricesButton);
-      return rowsWithDownloadGeneBcMatricesButton;
-    } else {
-      return rows;
-    }
-  }
-
-  getSize() {
-    return this.getRows().length;
-  }
-
-  handleFilterChange(filter) {
-    console.log('handling filter change');
-    console.log(filter);
-    let newFilters = Object.assign({}, this.state.filters);
-    if (filter.filterTerm) {
-      newFilters[filter.column.key] = filter;
-    } else {
-      delete newFilters[filter.column.key];
-    }
-    console.log('before setState');
-    {/*this.setState({ filters: newFilters });*/}
-  }
-
-  handleGridSort(sortColumn, sortDirection) {
-    console.log('handling grid sort');
-    console.log(sortColumn);
-    console.log(sortDirection);
-    console.log(this);
-    {/*  TODO: flesh out this function */}
-    this.setState({ sortColumn: sortColumn, sortDirection: sortDirection });
-  }
-
-  onClearFilters() {
-    console.log('clearing filters');
-    this.setState({ filters: {} });
-  }
-
-  rowGetter(rowIdx) {
-    const rows = this.getRows();
-    return rows[rowIdx];
-  }
-
   viewWebSummary(sampleId) {
     {/* TODO:
       disable download button?
@@ -206,27 +182,56 @@ export default class SampleIndex extends React.Component {
     this.fetchWebSummaryUrl(sampleId)
   }
 
+  viewWebSummaryButton({ value, griddleKey, rowData }) {
+    console.log("ROW DATA");
+    console.log(rowData);
+    const viewWebSummaryButton = <button type="submit"
+                                  onClick={() => this.viewWebSummary(rowData['id'])}>View Web Summary</button>;
+    {/*const sampleClone = cloneDeep(sample);
+    sampleClone['viewWebSummaryButton'] = viewWebSummaryButton;
+    return sampleClone;*/}
+
+
+    return (
+      viewWebSummaryButton
+    );
+  }
+
   render() {
+    {/*TODO: make custom noDataMessage work
+      https://griddlegriddle.github.io/v0-docs/customization.html*/}
+
     const { samples, loading } = this.props;
-    const { columns, allowedPageSizes } = this.state;
+    console.log(samples);
+    {/*const samplesWithDownloadButtons = samples.map(this.addDownloadButtons)
+    console.log("SAMPLES WITH DL BUTTONS");
+    console.log(samplesWithDownloadButtons);*/}
 
     if (loading) {
       return <LoadingIcon />;
     } else {
       return (
         <div className='samples-index'>
-          <ReactDataGrid
-            onGridSort={this.handleGridSort}
-            enableCellSelect={true}
-            columns={columns}
-            rowGetter={this.rowGetter}
-            rowsCount={this.getSize()}
-            minHeight={500}
-            toolbar={<Toolbar enableFilter={true}/>}
-            onAddFilter={this.handleFilterChange}
-            onClearFilters={this.onClearFilters} />
+          <Griddle
+            data={samples}
+            plugins={[plugins.LocalPlugin]}
+            noDataMessage={"You have no samples at the moment."}
+          >
+            <RowDefinition>
+              <ColumnDefinition id="sample_id" title="Sample ID" />
+              <ColumnDefinition id="run_id" title="Run ID" />
+              <ColumnDefinition id="reference_transcriptome" title="Reference Transcriptome" />
+              <ColumnDefinition id="viewWebSummaryButton"
+                                title="View Web Summary"
+                                customComponent={enhancedWithRowData(this.viewWebSummaryButton)}
+                                 />
+            </RowDefinition>
+          </Griddle>
         </div>
       );
     }
   }
 }
+
+{/*<ColumnDefinition id="downloadFastqsButton" title="FASTQs" />
+<ColumnDefinition id="downloadGeneBcMatricesButton" title="Gene BC Matrices" width={400} />*/}
