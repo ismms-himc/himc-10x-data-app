@@ -21,47 +21,33 @@ const rowDataSelector = (state, { griddleKey }) => {
 
 const enhancedWithRowData = connect((state, props) => {
   return {
-    // rowData will be available into MyCustomComponent
+    // rowData will be available into Custom Components (aka download buttons)
     rowData: rowDataSelector(state, props)
   };
 });
-
-
 
 
 export default class SampleIndex extends React.Component {
   constructor(props) {
     super(props);
 
-    {/*this.state = {
-      columns: [
-        { key: 'sample_id', name: 'Sample ID', sortable: true, filterable: true },
-        { key: 'run_id', name: 'Run ID', sortable: true, filterable: true },
-        { key: 'reference_transcriptome', name: 'Reference Transcriptome', sortable: true, filterable: true },
-        { key: 'viewWebSummaryButton', name: 'Web Summary' },
-        { key: 'downloadFastqsButton', name: 'FASTQs'},
-        { key: 'downloadGeneBcMatricesButton', name: 'Gene BC Matrices'}
-      ],
-      sortColumn: null,
-      sortDirection: null,
-      filters: {}
-    };*/}
-
     this.viewWebSummary = this.viewWebSummary.bind(this);
     this.viewWebSummaryButton = this.viewWebSummaryButton.bind(this);
-    this.addViewWebSummaryButton = this.addViewWebSummaryButton.bind(this);
+    // this.addViewWebSummaryButton = this.addViewWebSummaryButton.bind(this);
     this.fetchWebSummaryUrl = this.fetchWebSummaryUrl.bind(this);
 
-    this.addDownloadFastqsButton = this.addDownloadFastqsButton.bind(this);
+    // this.addDownloadFastqsButton = this.addDownloadFastqsButton.bind(this);
     this.downloadFastqs = this.downloadFastqs.bind(this);
+    this.downloadGeneBcMatricesButton = this.downloadGeneBcMatricesButton.bind(this);
+    this.downloadFastqsButton = this.downloadFastqsButton.bind(this);
     this.fetchFastqsUrl = this.fetchFastqsUrl.bind(this);
 
-    this.addDownloadGeneBcMatricesButton = this.addDownloadGeneBcMatricesButton.bind(this);
+    // this.addDownloadGeneBcMatricesButton = this.addDownloadGeneBcMatricesButton.bind(this);
     this.downloadGeneBcMatrices = this.downloadGeneBcMatrices.bind(this);
     this.fetchGeneBcMatricesUrl = this.fetchGeneBcMatricesUrl.bind(this);
 
     this.fetchPresignedUrl = this.fetchPresignedUrl.bind(this);
-    this.addDownloadButtons = this.addDownloadButtons.bind(this);
+    // this.addDownloadButtons = this.addDownloadButtons.bind(this);
   }
 
   componentDidMount() {
@@ -76,41 +62,41 @@ export default class SampleIndex extends React.Component {
     console.log(this.props == nextProps);
   }
 
-  addDownloadButtons(sample) {
-    {/*TODO: Do we even need to clone the sample here? */}
-    const sampleClone = cloneDeep(sample);
-    console.log("THIS:");
-    console.log(this);
-    const sampleWithWebSummaryButton = this.addViewWebSummaryButton(sampleClone);
-    {/*const sampleWithWebSummaryFastqsAndMatricesButtons = this.addDownloadGeneBcMatricesButton(sampleWithWebSummaryAndFastqsButton);
-    const sampleWithWebSummaryAndFastqsButton = this.addDownloadFastqsButton(sampleWithWebSummaryButton);*/}
+  // addDownloadButtons(sample) {
+  //   {/*TODO: Do we even need to clone the sample here? */}
+  //   const sampleClone = cloneDeep(sample);
+  //   console.log("THIS:");
+  //   console.log(this);
+  //   const sampleWithWebSummaryButton = this.addViewWebSummaryButton(sampleClone);
+  //   {/*const sampleWithWebSummaryFastqsAndMatricesButtons = this.addDownloadGeneBcMatricesButton(sampleWithWebSummaryAndFastqsButton);
+  //   const sampleWithWebSummaryAndFastqsButton = this.addDownloadFastqsButton(sampleWithWebSummaryButton);*/}
+  //
+  //   return sampleWithWebSummaryButton;
+  // }
 
-    return sampleWithWebSummaryButton;
-  }
+  // addDownloadFastqsButton(sample) {
+  //   const downloadFastqsButton = <button type="submit"
+  //                                 onClick={() => this.downloadFastqs(sample['id'])}>Download Run FASTQs</button>;
+  //   const sampleClone = cloneDeep(sample);
+  //   sampleClone['downloadFastqsButton'] = downloadFastqsButton;
+  //   return sampleClone;
+  // }
 
-  addDownloadFastqsButton(sample) {
-    const downloadFastqsButton = <button type="submit"
-                                  onClick={() => this.downloadFastqs(sample['id'])}>Download Run FASTQs</button>;
-    const sampleClone = cloneDeep(sample);
-    sampleClone['downloadFastqsButton'] = downloadFastqsButton;
-    return sampleClone;
-  }
+  // addDownloadGeneBcMatricesButton(sample){
+  //   const downloadGeneBcMatricesButton = <button type="submit"
+  //                                           onClick={() => this.downloadGeneBcMatrices(sample['id'])}>Download Matrices</button>;
+  //   const sampleClone = cloneDeep(sample);
+  //   sampleClone['downloadGeneBcMatricesButton'] = downloadGeneBcMatricesButton;
+  //   return sampleClone;
+  // }
 
-  addDownloadGeneBcMatricesButton(sample){
-    const downloadGeneBcMatricesButton = <button type="submit"
-                                            onClick={() => this.downloadGeneBcMatrices(sample['id'])}>Download Matrices</button>;
-    const sampleClone = cloneDeep(sample);
-    sampleClone['downloadGeneBcMatricesButton'] = downloadGeneBcMatricesButton;
-    return sampleClone;
-  }
-
-  addViewWebSummaryButton(sample) {
-    const viewWebSummaryButton = <button type="submit"
-                                  onClick={() => this.viewWebSummary(sample['id'])}>View Web Summary</button>;
-    const sampleClone = cloneDeep(sample);
-    sampleClone['viewWebSummaryButton'] = viewWebSummaryButton;
-    return sampleClone;
-  }
+  // addViewWebSummaryButton(sample) {
+  //   const viewWebSummaryButton = <button type="submit"
+  //                                 onClick={() => this.viewWebSummary(sample['id'])}>View Web Summary</button>;
+  //   const sampleClone = cloneDeep(sample);
+  //   sampleClone['viewWebSummaryButton'] = viewWebSummaryButton;
+  //   return sampleClone;
+  // }
 
   downloadFastqs(sampleId) {
     {/* TODO:
@@ -123,6 +109,15 @@ export default class SampleIndex extends React.Component {
     this.fetchFastqsUrl(sampleId)
   }
 
+  downloadFastqsButton({ value, griddleKey, rowData }) {
+    const downloadFastqsButton = <button type="submit"
+                                  onClick={() => this.downloadFastqs(rowData['id'])}>Download Run FASTQs</button>;
+
+    return (
+      downloadFastqsButton
+    );
+  }
+
   downloadGeneBcMatrices(sampleId) {
     {/* TODO:
       disable download button?
@@ -132,6 +127,15 @@ export default class SampleIndex extends React.Component {
       open the presigned URL - done
       */}
     this.fetchGeneBcMatricesUrl(sampleId);
+  }
+
+  downloadGeneBcMatricesButton({ value, griddleKey, rowData }) {
+    const downloadFastqsButton = <button type="submit"
+                                  onClick={() => this.downloadGeneBcMatrices(rowData['id'])}>Download Matrices</button>;
+
+    return (
+      downloadFastqsButton
+    );
   }
 
   fetchFastqsUrl(sampleId) {
@@ -183,14 +187,8 @@ export default class SampleIndex extends React.Component {
   }
 
   viewWebSummaryButton({ value, griddleKey, rowData }) {
-    console.log("ROW DATA");
-    console.log(rowData);
     const viewWebSummaryButton = <button type="submit"
                                   onClick={() => this.viewWebSummary(rowData['id'])}>View Web Summary</button>;
-    {/*const sampleClone = cloneDeep(sample);
-    sampleClone['viewWebSummaryButton'] = viewWebSummaryButton;
-    return sampleClone;*/}
-
 
     return (
       viewWebSummaryButton
@@ -225,6 +223,14 @@ export default class SampleIndex extends React.Component {
                                 title="View Web Summary"
                                 customComponent={enhancedWithRowData(this.viewWebSummaryButton)}
                                  />
+              <ColumnDefinition id="downloadFastqsButton"
+                                title="FASTQs"
+                                customComponent={enhancedWithRowData(this.downloadFastqsButton)}
+                                />
+              <ColumnDefinition id="downloadGeneBcMatricesButton"
+                                title="Gene BC Matrices"
+                                customComponent={enhancedWithRowData(this.downloadGeneBcMatricesButton)}
+                                />
             </RowDefinition>
           </Griddle>
         </div>
@@ -232,6 +238,3 @@ export default class SampleIndex extends React.Component {
     }
   }
 }
-
-{/*<ColumnDefinition id="downloadFastqsButton" title="FASTQs" />
-<ColumnDefinition id="downloadGeneBcMatricesButton" title="Gene BC Matrices" width={400} />*/}
