@@ -11,6 +11,7 @@ import { cloneDeep } from 'lodash';
 import $ from 'jquery';
 import { connect } from 'react-redux';
 
+// Helper functions below adapted from http://griddlegriddle.github.io/Griddle/examples/getDataFromRowIntoCell/
 
 const rowDataSelector = (state, { griddleKey }) => {
   return state
@@ -25,7 +26,6 @@ const enhancedWithRowData = connect((state, props) => {
     rowData: rowDataSelector(state, props)
   };
 });
-
 
 export default class SampleIndex extends React.Component {
   constructor(props) {
@@ -204,6 +204,13 @@ export default class SampleIndex extends React.Component {
     {/*const samplesWithDownloadButtons = samples.map(this.addDownloadButtons)
     console.log("SAMPLES WITH DL BUTTONS");
     console.log(samplesWithDownloadButtons);*/}
+  const gridWithoutSettingsLayout = ({ Table, Pagination, Filter, SettingsWrapper }) => (
+    <div>
+        <Filter />
+        <Table />
+        <Pagination />
+      </div>
+    );
 
     if (loading) {
       return <LoadingIcon />;
@@ -213,6 +220,7 @@ export default class SampleIndex extends React.Component {
           <Griddle
             data={samples}
             plugins={[plugins.LocalPlugin]}
+            components={{Layout: gridWithoutSettingsLayout}}
             noDataMessage={"You have no samples at the moment."}
           >
             <RowDefinition>
